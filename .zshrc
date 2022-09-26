@@ -1,17 +1,17 @@
 #############################################################
 # ALIASES (Most of these are for personal use and based on my personal taste)
 
+# Some commands are mac only (Especially ones using the open command)
+
 alias ..='cd ..'
 alias ...='cd ../../'
 alias back='cd -'
-alias cat='bat -p'
 alias cp='cp -iv'
-alias mv='mv -v'
+alias mv='mv -iv'
 alias top='gotop'
 alias ping='ping -c 3'
 alias g++='g++ -std=c++17'
 alias c='clear'
-alias clera='clear'
 alias python='python3'
 alias py='python3'
 alias j='java'
@@ -30,23 +30,17 @@ alias college='cd ~/College && open . && cd -'
 alias screenshots='cd ~/Desktop/Screenshots && open . && cd -'
 alias scripting='cd ~/Dev/Scripting'
 
-alias github='echo "My github: https://github.com/CarboxyDev/" && open -a safari "https://github.com/CarboxyDev/"'
+alias mygithub='cecho "CYAN" "My github: https://github.com/CarboxyDev/" && open -a safari "https://github.com/CarboxyDev/"'
 
 
 # Utilitity related aliases
 
 alias sha='shasum -a 256'
-alias diff='colordiff'
+alias diff='colordiff' # requires colordiff 
 alias myip='curl https://ipinfo.io/ip && echo "" && ipconfig getifaddr en0'
-
-
-# Course related aliases
-
-alias os='cd ~/College/OS/CSE231-OS/'
 alias gitupload='git add . && git commit -m "Minor changes [automated commit]" && git push'
-alias gitx='cecho "RED" "Use gitupload command instead."'
 
-
+# I'm currently working on a gitx command which will allow for faster git related operations
 # Fun and utterly useless aliases
 
 alias whoami='whoami | cowsay'
@@ -126,7 +120,7 @@ export SAVEHIST=$HISTSIZE
 
 
 setopt INC_APPEND_HISTORY
-export HISTTIMEFORMAT="[%F %T] "
+#export HISTTIMEFORMAT="[%F %T] "
 setopt EXTENDED_HISTORY
 setopt HIST_IGNORE_ALL_DUPS
 

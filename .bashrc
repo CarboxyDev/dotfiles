@@ -1,20 +1,18 @@
-# NOTE: Bash is not my main terminal. I'm only using it for some bash scripting practice.
+# NOTE: Bash is not my main terminal shell. I'm only using it for some bash scripting practice.
 # Most of the stuff below has been copied from my ~/.zshrc file
-
+echo "[!] Switched to BASH"
 #############################################################
 # ALIASES (Most of these are for personal use and based on my personal taste)
 
 alias ..='cd ..'
 alias ...='cd ../../'
 alias back='cd -'
-alias cat='bat -p'
 alias cp='cp -iv'
 alias mv='mv -v'
 alias top='gotop'
 alias ping='ping -c 3'
 alias g++='g++ -std=c++17'
 alias c='clear'
-alias clera='clear'
 alias python='python3'
 alias py='python3'
 alias j='java'
@@ -41,14 +39,8 @@ alias github='echo "My github: https://github.com/CarboxyDev/" && open -a safari
 alias sha='shasum -a 256'
 alias diff='colordiff'
 alias myip='curl https://ipinfo.io/ip && echo "" && ipconfig getifaddr en0'
-
-
-# Course related aliases
-
-alias os='cd ~/College/OS/CSE231-OS/'
 alias gitupload='git add . && git commit -m "Minor changes [automated commit]" && git push'
-alias gitx='cecho "RED" "Use gitupload command instead."'
-
+# I'm currently working on a gitx command which will allow for faster git related operations
 
 # Fun and utterly useless aliases
 
@@ -62,5 +54,7 @@ alias train='sl' # Steam locomotive animation just goes through the terminal cau
 
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
 eval $(thefuck --alias)
+source ~/Configs/bash/gitx.sh
 
+# Bash prompt
 export PS1="\[\033[38;5;49m\]bash\[$(tput sgr0)\] \[$(tput sgr0)\]\[\033[38;5;39m\]\W\[$(tput sgr0)\] \\$ \[$(tput sgr0)\]"
