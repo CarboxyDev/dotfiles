@@ -23,6 +23,7 @@ alias zshrc='vim ~/.zshrc'
 alias bashrc='vim ~/.bashrc'
 alias vimrc='vim ~/.vimrc'
 alias college='cd ~/College && open . && cd -'
+alias dev='cd ~/Dev'
 alias screenshots='cd ~/Desktop/Screenshots && open . && cd -'
 alias scripting='cd ~/Dev/Scripting'
 
@@ -95,6 +96,8 @@ export JAVA_HOME=`/usr/libexec/java_home`
 source ~/Configs/zsh/zsh-z.plugin.zsh
 source ~/Configs/zsh/script.zsh
 
+source ~/Configs/bash/gitx.sh
+
 # Fuzzy finder
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 # Fuck command for correcting mistakes
@@ -117,7 +120,5 @@ export SAVEHIST=$HISTSIZE
 
 setopt INC_APPEND_HISTORY
 #export HISTTIMEFORMAT="[%F %T] "
-setopt EXTENDED_HISTORY
-setopt HIST_IGNORE_ALL_DUPS
 
 
