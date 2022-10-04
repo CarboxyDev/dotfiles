@@ -5,7 +5,7 @@
 
 alias ..='cd ..'
 alias ...='cd ../../'
-alias back='cd -'
+alias back='cd - >> /dev/null'
 alias cp='cp -iv'
 alias mv='mv -iv'
 alias c='clear'

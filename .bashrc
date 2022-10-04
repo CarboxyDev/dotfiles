@@ -6,7 +6,7 @@ echo "[!] Switched to BASH"
 
 alias ..='cd ..'
 alias ...='cd ../../'
-alias back='cd -'
+alias back='cd - >> /dev/null'
 alias cp='cp -iv'
 alias mv='mv -v'
 alias top='gotop'
