@@ -36,7 +36,7 @@ alias sha='shasum -a 256'
 alias diff='colordiff'
 alias myip='curl https://ipinfo.io/ip && echo "" && ipconfig getifaddr en0'
 alias gitupload='git add . && git commit -m "Minor changes [automated commit]" && git push'
-# I'm currently working on a gitx command which will allow for faster git related operations
+
 
 # Fun and utterly useless aliases
 

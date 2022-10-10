@@ -9,13 +9,12 @@ alias back='cd - >> /dev/null'
 alias cp='cp -iv'
 alias mv='mv -iv'
 alias c='clear'
-alias ls='ls --color=auto'
 alias top='gotop'
 alias ping='ping -c 3'
 alias g++='g++ -std=c++17'
 alias python='python3'
 alias py='python3'
-alias j='java'
+alias j='javac Main.java && java Main'
 alias jc='javac'
 alias a='make a && ./a'
 alias finder='open .'
@@ -38,7 +37,6 @@ alias diff='colordiff' # requires colordiff
 alias myip='curl https://ipinfo.io/ip && echo "" && ipconfig getifaddr en0'
 alias gitupload='git add . && git commit -m "Minor changes [automated commit]" && git push'
 
-# I'm currently working on a gitx command which will allow for faster git related operations
 # Fun and utterly useless aliases
 
 alias whoami='whoami | cowsay'
