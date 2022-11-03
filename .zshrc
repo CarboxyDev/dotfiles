@@ -1,47 +1,5 @@
-#############################################################
-# ALIASES (Most of these are for personal use and based on my personal taste)
-
-# Some commands are mac only (Especially ones using the open command)
-
-alias ..='cd ..'
-alias ...='cd ../../'
-alias back='cd - >> /dev/null'
-alias cp='cp -iv'
-alias mv='mv -iv'
-alias c='clear'
-alias top='gotop'
-alias ping='ping -c 3'
-alias g++='g++ -std=c++17'
-alias python='python3'
-alias py='python3'
-alias j='javac Main.java && java Main'
-alias jc='javac'
-alias a='make a && ./a'
-alias finder='open .'
-alias apps='cd /Applications && open . && cd -'
-alias zshrc='vim ~/.zshrc'
-alias bashrc='vim ~/.bashrc'
-alias vimrc='vim ~/.vimrc'
-alias college='cd ~/College && open . && cd -'
-alias dev='cd ~/Dev'
-alias screenshots='cd ~/Desktop/Screenshots && open . && cd -'
-alias scripting='cd ~/Dev/Scripting'
-
-alias mygithub='cecho "CYAN" "My github: https://github.com/CarboxyDev/" && open -a safari "https://github.com/CarboxyDev/"'
-
-
-# Utilitity related aliases
-
-alias sha='shasum -a 256'
-alias diff='colordiff' # requires colordiff 
-alias myip='curl https://ipinfo.io/ip && echo "" && ipconfig getifaddr en0'
-alias gitupload='git add . && git commit -m "Minor changes [automated commit]" && git push'
-
-# Fun and utterly useless aliases
-
-alias whoami='whoami | cowsay'
-alias fortune='fortune | cowsay'
-alias train='sl' # Steam locomotive animation just goes through the terminal cause why not
+# Source the alias file for my personal aliases
+source ~/Configs/zsh/alias.zsh
 
 
 #############################################################
@@ -62,7 +20,13 @@ alias train='sl' # Steam locomotive animation just goes through the terminal cau
 #export PS1="%F{214}%m%F{015} %F{039}%1~ -> %F{015}"
 
 # 1 line prompt with small concise path and colored %/$ sign 
-export PS1="%F{214}%m%F{015} %F{039}%1~ %F{007}%% %F{015}"
+#export PS1="%F{214}%m%F{015} %F{039}%1~ %F{007}%% %F{015}"
+
+# 1 line prompt with custom marking
+export PS1="%F{214}λ%F{015} %F{039}%1~ %F{007}%% %F{015}"
+
+# 1 line simple and very concise path
+#export PS1="%F{214}%F{015}%F{039}%1~ %F{007}%% %F{015}"
 
 # 1 line prompt with semi-small concise path (like 2 folder names at most)
 #export PS1="%F{214}%m%F{015} %F{039}%2~ %F{015}%% "
