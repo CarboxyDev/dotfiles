@@ -15,7 +15,10 @@ set showcmd
 set showmatch
 set hlsearch
 set history=1000
-colorscheme gruvbox
+"colorscheme gruvbox
+packadd! dracula
+syntax enable
+colorscheme dracula
 
 " Enables auto completion when pressing TAB
 set wildmenu
