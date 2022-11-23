@@ -23,7 +23,7 @@ source ~/Configs/zsh/alias.zsh
 #export PS1="%F{214}%m%F{015} %F{039}%1~ %F{007}%% %F{015}"
 
 # 1 line prompt with custom marking
-export PS1="%F{214}λ%F{015} %F{039}%1~ %F{007}%% %F{015}"
+export PS1="%F{214}λ%F{015} %F{111}%1~ %B$ %F{015}%b"
 
 # 1 line simple and very concise path
 #export PS1="%F{214}%F{015}%F{039}%1~ %F{007}%% %F{015}"
@@ -60,7 +60,6 @@ source ~/Configs/zsh/zsh-z.plugin.zsh
 source ~/Configs/zsh/script.zsh
 
 source ~/Configs/bash/gitx.sh
-
 # Fuzzy finder
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 # Fuck command for correcting mistakes
@@ -69,6 +68,11 @@ eval $(thefuck --alias)
 #############################################################
 ### MISC
 
+
+# JUnit related stuff
+export JUNIT_HOME="$HOME/Dev/Java/JUnit"
+export PATH="$PATH:$JUNIT_HOME"
+export CLASSPATH="$CLASSPATH:$JUNIT_HOME/junit-4.13.2.jar:$JUNIT_HOME/hamcrest-core-1.3.jar"
 
 # Uncomment the line below to enable a greeting in terminal
 #cecho "GREEN" "$USER is now active on $HOST\n"
