@@ -14,6 +14,7 @@ alias ls='exa'
 alias top='btop'
 alias ping='ping -c 3'
 alias g++='g++ -std=c++17'
+alias size='du -h'
 alias python='python3.9'
 alias py='python3.9'
 alias j='javac Main.java && java Main'
@@ -27,7 +28,6 @@ alias vimrc='vim ~/.vimrc'
 alias aliases='vim ~/Configs/zsh/alias.zsh'
 alias college='cd ~/College && open . && cd -'
 alias dev='cd ~/Dev'
-
 alias mygithub='cecho "CYAN" "My github: https://github.com/CarboxyDev/" && open -a safari "https://github.com/CarboxyDev/"'
 
 # Utilitity related aliases

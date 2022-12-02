@@ -60,6 +60,7 @@ source ~/Configs/zsh/zsh-z.plugin.zsh
 source ~/Configs/zsh/script.zsh
 
 source ~/Configs/bash/gitx.sh
+source ~/Configs/bash/extra.sh
 # Fuzzy finder
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 # Fuck command for correcting mistakes
