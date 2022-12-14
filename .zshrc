@@ -1,5 +1,5 @@
 # Source the alias file for my personal aliases
-source ~/Configs/zsh/alias.zsh
+source ~/.alias.zsh
 
 
 #############################################################
