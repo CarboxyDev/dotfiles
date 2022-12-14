@@ -60,7 +60,8 @@ export PATH=~/.npm-global/bin:$PATH
 export PATH="/opt/homebrew/opt/make/libexec/gnubin:$PATH"
 export PATH="/opt/homebrew/opt/openjdk/bin:$PATH"
 export JAVA_HOME=`/usr/libexec/java_home`
-# These scripts given below are dependent upon an absolute path on my local machine.
+
+# These scripts given below are dependent on absolute paths on my local machine.
 source ~/Configs/zsh/zsh-z.plugin.zsh
 source ~/Configs/zsh/script.zsh
 
@@ -68,20 +69,13 @@ source ~/Configs/bash/gitx.sh
 source ~/Configs/bash/extra.sh
 # Fuzzy finder
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-# Fuck command for correcting mistakes
+# Command for correcting mistakes
 eval $(thefuck --alias)
 
 #############################################################
 ### MISC
 
 
-# JUnit related stuff
-export JUNIT_HOME="$HOME/Dev/Java/JUnit"
-export PATH="$PATH:$JUNIT_HOME"
-export CLASSPATH="$CLASSPATH:$JUNIT_HOME/junit-4.13.2.jar:$JUNIT_HOME/hamcrest-core-1.3.jar"
-
-# Uncomment the line below to enable a greeting in terminal
-#cecho "GREEN" "$USER is now active on $HOST\n"
 
 #############################################################
 ### ZSH HISTORY RELATED (History saved in ~/.zsh_history)

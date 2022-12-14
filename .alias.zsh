@@ -22,7 +22,7 @@ alias a='make a && ./a'
 alias finder='open .'
 alias apps='cd /Applications && open . && cd -'
 alias zshrc='vim ~/.zshrc'
-alias aliases='vim ~/Configs/zsh/alias.zsh'
+alias aliases='vim ~/.alias.zsh'
 alias g='cd ~/Github'
 
 # Utilitity related aliases
