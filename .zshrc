@@ -22,8 +22,13 @@ source ~/Configs/zsh/alias.zsh
 # 1 line prompt with small concise path and colored %/$ sign 
 #export PS1="%F{214}%m%F{015} %F{039}%1~ %F{007}%% %F{015}"
 
-# 1 line prompt with custom marking
-export PS1="%F{214}λ%F{015} %F{111}%1~ %B$ %F{015}%b"
+# 1 line prompt with just compact path
+export PS1="%F{117}%1~ $ %F{015}%b"
+
+
+# 1 line prompt with custom lambda marking and gold/purple colors
+# export PS1="%F{214}λ%F{015} %F{111}%1~ %B$ %F{015}%b"
+
 
 # 1 line simple and very concise path
 #export PS1="%F{214}%F{015}%F{039}%1~ %F{007}%% %F{015}"

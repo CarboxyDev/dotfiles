@@ -19,6 +19,7 @@ alias python='python3.9'
 alias py='python3.9'
 alias j='javac Main.java && java Main'
 alias jc='javac'
+alias run='npm run dev'
 alias a='make a && ./a'
 alias finder='open .'
 alias apps='cd /Applications && open . && cd -'
@@ -29,6 +30,7 @@ alias aliases='vim ~/Configs/zsh/alias.zsh'
 alias college='cd ~/College && open . && cd -'
 alias dev='cd ~/Dev'
 alias mygithub='cecho "CYAN" "My github: https://github.com/CarboxyDev/" && open -a safari "https://github.com/CarboxyDev/"'
+alias g='cd ~/Github'
 
 # Utilitity related aliases
 
