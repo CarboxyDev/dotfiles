@@ -34,3 +34,5 @@ alias ip='curl https://ipinfo.io/ip && echo "" && ipconfig getifaddr en0'
 
 alias whoami='whoami | cowsay'
 
+# Temporary aliases go here
+alias upload='curl bashupload.com -T'
