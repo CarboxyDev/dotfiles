@@ -36,6 +36,12 @@ eval $(thefuck --alias)
 #############################################################
 ### MISC
 
+DISABLE_AUTO_TITLE="true"
+
+precmd() {
+  # sets the tab title to current dir
+  echo -ne "\e]1;${PWD##*/}\a"
+}
 
 
 #############################################################
