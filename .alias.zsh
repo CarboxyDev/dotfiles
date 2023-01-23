@@ -25,6 +25,8 @@ alias apps='cd /Applications && open . && cd -'
 alias zshrc='vim ~/.zshrc'
 alias aliases='vim ~/.alias.zsh'
 alias g='cd ~/Github'
+alias github='cd ~/Github'
+alias dev='cd ~/Dev'
 alias vim='nvim'
 # Utilitity related aliases
 
