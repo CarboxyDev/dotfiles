@@ -29,6 +29,7 @@ alias github='cd ~/Github'
 alias dev='cd ~/Dev'
 alias vim='nvim'
 alias gitd='git diff'
+alias gitc='git diff --stat'
 # Utilitity related aliases
 
 alias diff='colordiff' # requires colordiff 
