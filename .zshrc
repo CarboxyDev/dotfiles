@@ -1,7 +1,3 @@
-###########################################################
-######################## Z S H R C ########################
-###########################################################
-
 # Source the other zsh files for the aliases and prompt
 
 source ~/.alias.zsh
@@ -22,7 +18,9 @@ export PATH=~/.npm-global/bin:$PATH
 export PATH="/opt/homebrew/opt/make/libexec/gnubin:$PATH"
 export PATH="/opt/homebrew/opt/openjdk/bin:$PATH"
 export JAVA_HOME=`/usr/libexec/java_home`
-
+export ANDROID_HOME=$HOME/Library/Android/sdk
+export PATH=$PATH:$ANDROID_HOME/emulator
+export PATH=$PATH:$ANDROID_HOME/platform-tools
 
 # Source the miscellanous zsh files
 
@@ -31,7 +29,7 @@ source ~/Configs/zsh/script.zsh
 
 source ~/Configs/bash/gitx.sh
 source ~/Configs/bash/extra.sh
-
+source ~/Configs/zsh/time-tracker.sh
 
 # Add fuzzy finder
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
@@ -39,12 +37,10 @@ source ~/Configs/bash/extra.sh
 
 # Miscellanous stuff
 
-DISABLE_AUTO_TITLE="true"
-precmd() {
-  # sets the tab title to current dir
-  echo -ne "\e]1;${PWD##*/}\a"
+iterm_tab_title() {
+  echo -ne "\e]0;${PWD##*/}\a"
 }
-
+add-zsh-hook precmd iterm_tab_title
 
 # Maintains zsh history
 
@@ -55,4 +51,12 @@ export SAVEHIST=$HISTSIZE
 
 setopt INC_APPEND_HISTORY
 
+# For Github Copilot CLI
+eval "$(github-copilot-cli alias -- "$0")"
 
+# bun completions
+[ -s "/Users/arman/.bun/_bun" ] && source "/Users/arman/.bun/_bun"
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
