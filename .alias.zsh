@@ -21,6 +21,9 @@ alias gitc='git diff --stat'
 alias gitl='git log --oneline'
 alias size='du -ah'
 
+alias npm='pnpm'
+alias nnpm='npm'
+
 
 alias diff='colordiff' # requires colordiff 
 alias ip='curl https://ipinfo.io/ip && echo "" && ipconfig getifaddr en0'
