@@ -11,7 +11,6 @@ compinit
 zstyle ':completion:*' matcher-list '' 'm:{a-zA-Z}={A-Za-z}'
 zstyle ':completion:*' menu select
 
-
 # Export global OS environment variables
 
 export PATH=~/.npm-global/bin:$PATH
@@ -39,6 +38,7 @@ iterm_tab_title() {
 }
 add-zsh-hook precmd iterm_tab_title
 
+
 # Maintains zsh history
 
 export HISTFILE=~/.zsh_history
@@ -57,3 +57,16 @@ eval "$(github-copilot-cli alias -- "$0")"
 # bun
 export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
+
+# pnpm
+export PNPM_HOME="/Users/arman/Library/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME:"*) ;;
+  *) export PATH="$PNPM_HOME:$PATH" ;;
+esac
+# pnpm end
+#
+#export ZSH_AUTOSUGGEST_COMPLETION_IGNORE="*"
+bindkey '\t\t' autosuggest-accept
+source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh

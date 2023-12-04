@@ -20,10 +20,11 @@ alias gitd='git diff'
 alias gitc='git diff --stat'
 alias gitl='git log --oneline'
 alias size='du -ah'
-
+alias dsa='z dsa && code .'
 alias npm='pnpm'
 alias nnpm='npm'
-
+alias s='skhd &'
+alias skill='skhd --stop-service'
 
 alias diff='colordiff' # requires colordiff 
 alias ip='curl https://ipinfo.io/ip && echo "" && ipconfig getifaddr en0'
