@@ -1,0 +1,323 @@
+{
+  "editor.renderWhitespace": "selection",
+  "editor.guides.highlightActiveIndentation": true,
+  "workbench.sideBar.location": "right",
+  "editor.fontFamily": "'SF Mono','Droid Sans Mono','Ubuntu Mono', Menlo",
+  "editor.matchBrackets": "never",
+  "editor.hover.delay": 500,
+  "workbench.startupEditor": "none",
+  "workbench.preferredDarkColorTheme": "GitHub Dark Dimmed",
+  "workbench.preferredHighContrastColorTheme": "Default Dark+",
+  "workbench.tree.expandMode": "doubleClick",
+  "workbench.editor.closeOnFileDelete": true,
+  "workbench.editor.tabCloseButton": "right",
+  "workbench.editor.untitled.hint": "hidden",
+  "workbench.editor.untitled.labelFormat": "name",
+  "workbench.editor.limit.enabled": true,
+  "workbench.editor.limit.value": 7,
+  "workbench.settings.enableNaturalLanguageSearch": false,
+  "window.title": "-",
+  "window.titleSeparator": "",
+  "explorer.incrementalNaming": "smart",
+  "explorer.sortOrder": "type",
+  "terminal.explorerKind": "external",
+  "update.mode": "manual",
+  "css.hover.documentation": false,
+  "css.hover.references": false,
+  "emmet.triggerExpansionOnTab": true,
+  "liveServer.settings.donotShowInfoMsg": true,
+  "html.hover.references": false,
+  "editor.minimap.maxColumn": 1205000,
+  "editor.inlayHints.fontFamily": "'Ubuntu Mono'",
+  "editor.scrollbar.horizontal": "hidden",
+  "editor.scrollbar.vertical": "hidden",
+  "editor.formatOnPaste": true,
+  "workbench.commandPalette.preserveInput": true,
+  "workbench.enableExperiments": false,
+  "workbench.colorCustomizations": {
+    "settings.checkboxBorder": "#74dcb1"
+  },
+  "explorer.confirmDelete": false,
+  "code-runner.runInTerminal": true,
+  "terminal.integrated.cursorStyle": "line",
+  "terminal.integrated.cursorBlinking": true,
+  "terminal.integrated.fontSize": 14,
+  "workbench.tips.enabled": false,
+  "editor.tokenColorCustomizations": {},
+  "editor.semanticTokenColorCustomizations": {},
+  "code-runner.clearPreviousOutput": true,
+  "terminal.integrated.enableMultiLinePasteWarning": false,
+  "editor.fontLigatures": true,
+  "http.proxyAuthorization": null,
+  "terminal.external.osxExec": "iTerm.app",
+  "terminal.integrated.defaultProfile.osx": "zsh",
+  "terminal.integrated.fontFamily": "'Andale Mono'",
+  "terminal.integrated.lineHeight": 1.15,
+  "audioCues.lineHasWarning": "auto",
+  "security.workspace.trust.untrustedFiles": "open",
+  "emmet.includeLanguages": {
+    "javascript": "javascriptreact"
+  },
+  "editor.cursorSmoothCaretAnimation": "on",
+  "vsicons.dontShowNewVersionMessage": true,
+  "files.associations": {
+    "*.pcss": "scss",
+    "*.css": "css",
+    "*.jsx": "javascriptreact",
+    ".clangd": "yaml",
+    ".clang-format": "yaml",
+    ".skhdrc": "applescript-injection"
+  },
+  "editor.quickSuggestions": {
+    "strings": "inline"
+  },
+  "editor.guides.indentation": false,
+  "editor.guides.highlightActiveBracketPair": false,
+  "editor.guides.bracketPairs": "active",
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.tabSize": 2
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.tabSize": 2,
+    "editor.parameterHints.enabled": true
+  },
+  "[javascriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.tabSize": 2
+  },
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.tabSize": 2
+  },
+  "[python]": {
+    "editor.defaultFormatter": "ms-python.autopep8",
+    "editor.tabSize": 4
+  },
+  "[prisma]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": true,
+    "editor.tabSize": 2
+  },
+  "[json]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": true,
+    "editor.tabSize": 2
+  },
+  "[cpp]": {
+    "editor.tabSize": 4,
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "demiaochen.clang-format-indent-4"
+  },
+  "[rust]": {
+    "editor.defaultFormatter": "rust-lang.rust-analyzer"
+  },
+  "workbench.editorAssociations": {
+    "*.db": "sqlite3-editor.editor",
+    "*.dat": "default"
+  },
+
+  "prettier.bracketSameLine": true,
+  "editor.formatOnSave": true,
+  "terminal.integrated.gpuAcceleration": "off",
+  "tailwindCSS.experimental.classRegex": [
+    ["clsx\\(([^)]*)\\)", "(?:'|\"|`)([^']*)(?:'|\"|`)"],
+    ["cva\\(([^)]*)\\)", "[\"'`]([^\"'`]*).*?[\"'`]"]
+  ],
+  "tailwindCSS.classAttributes": [".*Styles.*", "className"],
+  "inlineFold.autoFold": false,
+  "workbench.list.mouseWheelScrollSensitivity": 1.1,
+  "workbench.list.smoothScrolling": true,
+  "workbench.productIconTheme": "icons-carbon",
+  "workbench.welcomePage.walkthroughs.openOnInstall": false,
+  "breadcrumbs.icons": false,
+  "editor.inlineSuggest.enabled": true,
+  "github.copilot.enable": {
+    "*": true,
+    "plaintext": false,
+    "markdown": false,
+    "scminput": false,
+    "yaml": false,
+    "rust": false,
+    "cpp": false,
+    "typescriptreact": true,
+    "javascriptreact": false,
+    "typescript": true
+  },
+  "debug.onTaskErrors": "showErrors",
+  "code-runner.executorMap": {
+    "javascript": "node",
+    "java": "cd $dir && javac $fileName && java $fileNameWithoutExt",
+    "c": "cd $dir && gcc $fileName -o $fileNameWithoutExt && $dir$fileNameWithoutExt",
+    "zig": "zig run",
+    "cpp": "cd $dir && g++ -std=c++17 $fileName -o $fileNameWithoutExt && $dir$fileNameWithoutExt",
+    "objective-c": "cd $dir && gcc -framework Cocoa $fileName -o $fileNameWithoutExt && $dir$fileNameWithoutExt",
+    "php": "php",
+    "python": "python -u",
+    "perl": "perl",
+    "perl6": "perl6",
+    "ruby": "ruby",
+    "go": "go run",
+    "lua": "lua",
+    "groovy": "groovy",
+    "powershell": "powershell -ExecutionPolicy ByPass -File",
+    "bat": "cmd /c",
+    "shellscript": "bash",
+    "fsharp": "fsi",
+    "csharp": "scriptcs",
+    "vbscript": "cscript //Nologo",
+    "typescript": "ts-node",
+    "coffeescript": "coffee",
+    "scala": "scala",
+    "swift": "swift",
+    "julia": "julia",
+    "crystal": "crystal",
+    "ocaml": "ocaml",
+    "r": "Rscript",
+    "applescript": "osascript",
+    "clojure": "lein exec",
+    "haxe": "haxe --cwd $dirWithoutTrailingSlash --run $fileNameWithoutExt",
+    "rust": "cd $dir && rustc $fileName && $dir$fileNameWithoutExt",
+    "racket": "racket",
+    "scheme": "csi -script",
+    "ahk": "autohotkey",
+    "autoit": "autoit3",
+    "dart": "dart",
+    "pascal": "cd $dir && fpc $fileName && $dir$fileNameWithoutExt",
+    "d": "cd $dir && dmd $fileName && $dir$fileNameWithoutExt",
+    "haskell": "runghc",
+    "nim": "nim compile --verbosity:0 --hints:off --run",
+    "lisp": "sbcl --script",
+    "kit": "kitc --run",
+    "v": "v run",
+    "sass": "sass --style expanded",
+    "scss": "scss --style expanded",
+    "less": "cd $dir && lessc $fileName $fileNameWithoutExt.css",
+    "FortranFreeForm": "cd $dir && gfortran $fileName -o $fileNameWithoutExt && $dir$fileNameWithoutExt",
+    "fortran-modern": "cd $dir && gfortran $fileName -o $fileNameWithoutExt && $dir$fileNameWithoutExt",
+    "fortran_fixed-form": "cd $dir && gfortran $fileName -o $fileNameWithoutExt && $dir$fileNameWithoutExt",
+    "fortran": "cd $dir && gfortran $fileName -o $fileNameWithoutExt && $dir$fileNameWithoutExt",
+    "sml": "cd $dir && sml $fileName"
+  },
+  "editor.minimap.enabled": false,
+  "editor.wordWrapColumn": 90,
+  "terminal.integrated.env.osx": {},
+  "editor.smoothScrolling": true,
+  "git.autofetch": true,
+  "better-comments.tags": [
+    {
+      "tag": "!",
+      "color": "#F57156",
+      "strikethrough": false,
+      "underline": false,
+      "backgroundColor": "transparent",
+      "bold": false,
+      "italic": false
+    },
+    {
+      "tag": "?",
+      "color": "#3498DB",
+      "strikethrough": false,
+      "underline": false,
+      "backgroundColor": "transparent",
+      "bold": false,
+      "italic": false
+    },
+    {
+      "tag": "//",
+      "color": "#474747",
+      "strikethrough": true,
+      "underline": false,
+      "backgroundColor": "transparent",
+      "bold": false,
+      "italic": false
+    },
+    {
+      "tag": "todo",
+      "color": "#FF8C00",
+      "strikethrough": false,
+      "underline": false,
+      "backgroundColor": "transparent",
+      "bold": false,
+      "italic": false
+    },
+    {
+      "tag": "fixme",
+      "color": "#FE7A5F",
+      "strikethrough": false,
+      "underline": false,
+      "backgroundColor": "transparent",
+      "bold": false,
+      "italic": false
+    },
+    {
+      "tag": "*",
+      "color": "#98C379",
+      "strikethrough": false,
+      "underline": false,
+      "backgroundColor": "transparent",
+      "bold": false,
+      "italic": false
+    }
+  ],
+  "redhat.telemetry.enabled": false,
+  "workbench.editor.enablePreview": false,
+  "workbench.editor.showTabs": true,
+  "explorer.decorations.badges": false,
+  "workbench.layoutControl.enabled": false,
+  "typescript.preferences.importModuleSpecifier": "non-relative",
+  "css.lint.unknownAtRules": "ignore",
+  "cmake.configureOnOpen": false,
+  "lldb.library": "/Library/Developer/CommandLineTools/Library/PrivateFrameworks/LLDB.framework/Versions/A/LLDB",
+  "lldb.launch.expressions": "native",
+  "git.openRepositoryInParentFolders": "never",
+  "lldb.suppressUpdateNotifications": true,
+  "errorLens.enabledDiagnosticLevels": ["error", "info"], // Disabled temporarily
+  "explorer.compactFolders": false,
+  "explorer.decorations.colors": false,
+  "C_Cpp.errorSquiggles": "enabled",
+  "C_Cpp.intelliSenseEngine": "disabled",
+  "editor.inlayHints.enabled": "off",
+  "explorer.confirmDragAndDrop": false,
+  "clang-format.style": "file",
+  "python.venvPath": "/opt/homebrew/opt/python@3.9/bin/python3.9",
+  "python.terminal.activateEnvironment": true,
+  "python.defaultInterpreterPath": "/opt/homebrew/bin/python3.9",
+  "editor.accessibilitySupport": "off",
+  "editor.lineHeight": 0,
+  "editor.fontSize": 19,
+  "window.openFilesInNewWindow": "on",
+  "cmake.showOptionsMovedNotification": false,
+  /* Minimal VSCode options go here, uses third-party extension */
+  "window.titleBarStyle": "native",
+  "editor.hideCursorInOverviewRuler": true,
+  "apc.electron": {
+    "frame": false,
+    "titleBarStyle": "customButtonsOnHover"
+  },
+  // "apc.electron": {
+  //   "titleBarStyle": "hiddenInset",
+  //   "trafficLightPosition": {
+  //     "x": 11,
+  //     "y": 10
+  //   }
+  // },
+  "apc.header": {
+    "height": 40
+  },
+  "apc.stylesheet": {
+    ".title-label > h2": "display: none", // Remove primary side bar title
+    //".title-actions": "display: none", // Remove primary side bar action icons
+    ".editor-actions": "display: none", // Remove editor action icons
+    ".nosidebar .inline-tabs-placeholder": "width: 75px", // Align tabs to not overlap window controls when primary bar is hidden
+    ".monaco-workbench .part>.composite.title": "display: none"
+  },
+  "workbench.colorTheme": "Carboxy",
+  "workbench.activityBar.visible": false,
+  "search.followSymlinks": false,
+  "typescript.updateImportsOnFileMove.enabled": "always",
+  "typescript.tsserver.experimental.enableProjectDiagnostics": true // Typescript now scans non-opened files for error as well. May use more CPU power.
+}
+
