@@ -2,6 +2,9 @@
 #############################################################
 ### ZSH PROMPT
 
+parse_git_branch() {
+ git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/(\1)/'
+}
 
 # For the prompt stuff, check out https://zsh.sourceforge.io/Doc/Release/Prompt-Expansion.html
 # For the colors, check out https://www.ditig.com/256-colors-cheat-sheet
@@ -23,10 +26,11 @@
 #export PS1="%F{147}%1~ $ %F{255}%b"
 
 # 1 line prompt with just compact path + any color prompt
-#export PS1="%F{226}%1~ $ %F{255}%b"
+
+export PS1="%F{172}%1~ $ %F{255}%b"
 
 # 1 line prompt with just compact path + less colors
-export PS1="%F{247}%1~ $ %F{255}%b"
+#export PS1="%F{247}%1~ $ %F{255}%b"
 
 # 1 line prompt with custom lambda marking and gold/purple colors
 #export PS1="%F{214}λ%F{015} %F{111}%1~ %B$ %F{015}%b"
