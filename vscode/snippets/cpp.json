@@ -1,0 +1,12 @@
+{
+  "Output to console": {
+    "prefix": ["cout", "print"],
+    "body": ["cout << $0 << '\\n';"],
+    "description": "Log output to console"
+  },
+  "newline": {
+    "prefix": ["n"],
+    "body": ["'\\n';"],
+    "description": "Adds a newline character to editor"
+  }
+}
