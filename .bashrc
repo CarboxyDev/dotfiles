@@ -54,3 +54,6 @@ source ~/Configs/bash/gitx.sh
 
 # Bash prompt
 export PS1="\[\033[38;5;49m\]bash\[$(tput sgr0)\] \[$(tput sgr0)\]\[\033[38;5;39m\]\W\[$(tput sgr0)\] \\$ \[$(tput sgr0)\]"
+
+
+PATH=~/.console-ninja/.bin:$PATH

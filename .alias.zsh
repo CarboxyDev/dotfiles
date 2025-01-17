@@ -24,6 +24,7 @@ alias tmuxconf='nvim ~/.tmux.conf'
 alias g='gitc'
 alias github='cd ~/Github'
 alias gitd='git diff'
+alias gitdd='git diff --word-diff'
 alias gitb='git branch'
 alias gitc='git diff --stat'
 alias gitl='git log --pretty=format:"%h - %an, %ar : %s"'
@@ -39,3 +40,4 @@ alias vim='nvim'
 alias diff='colordiff' # requires colordiff 
 alias ip='curl https://ipinfo.io/ip && echo "" && ipconfig getifaddr en0'
 alias ss='freeze' # requires freeze
+alias yabaikill='rm -rf /tmp/yabai*'
