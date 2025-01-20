@@ -15,12 +15,8 @@ esac
 export PATH="/Users/arman/.cargo/bin:$PATH"
 
 
-source ~/Configs/zsh/todo.zsh
-source ~/Configs/zsh/zsh-z.plugin.zsh
-source ~/Configs/zsh/script.zsh
-source ~/Configs/bash/gitx.sh
-source ~/Configs/bash/extra.sh
-source ~/Configs/zsh/time-tracker.sh
+source ~/dotfiles/zsh-z.plugin.zsh
+source ~/dotfiles/gitx.sh
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 
