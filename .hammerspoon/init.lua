@@ -3,6 +3,78 @@ local currentApp = nil
 local previousApp = nil
 local isSwitching = false  -- Flag to prevent tracking during manual switches
 
+-- F2 editor cycling: list of text editors
+local editorApps = {"Cursor", "Visual Studio Code", "Antigravity", "Codex"}
+local editorSet = {}
+for _, name in ipairs(editorApps) do editorSet[name] = true end
+local lastFocusedEditorName = nil
+
+local function containsIgnoreCase(haystack, needle)
+  if not haystack or not needle then return false end
+  return string.find(string.lower(haystack), string.lower(needle), 1, true) ~= nil
+end
+
+local function editorNameFromApp(app)
+  if not app then return nil end
+
+  local appName = app:name()
+  if appName and editorSet[appName] then return appName end
+
+  local bundleID = app:bundleID() or ""
+  local candidates = {
+    appName or "",
+    bundleID,
+  }
+
+  for _, value in ipairs(candidates) do
+    if containsIgnoreCase(value, "cursor") then return "Cursor" end
+    if containsIgnoreCase(value, "visual studio code") or containsIgnoreCase(value, "vscode") then
+      return "Visual Studio Code"
+    end
+    if containsIgnoreCase(value, "antigravity") then return "Antigravity" end
+    if containsIgnoreCase(value, "codex") then return "Codex" end
+  end
+
+  return nil
+end
+
+-- Find a running app by name, trying multiple lookup strategies
+local function findRunningApp(name)
+  local app = hs.application.get(name)
+  if app and app:isRunning() then return app end
+  app = hs.appfinder.appFromName(name)
+  if app and app:isRunning() then return app end
+  -- Partial/fuzzy match as last resort
+  app = hs.application.find(name)
+  if app and app:isRunning() then return app end
+  -- Final fallback: case-insensitive substring match against running app names.
+  -- This handles apps whose displayed name differs slightly (e.g. "OpenAI Codex").
+  local lname = string.lower(name)
+  local fallback = nil
+  for _, runningApp in ipairs(hs.application.runningApplications()) do
+    local runningName = runningApp:name()
+    if runningName and string.find(string.lower(runningName), lname, 1, true) then
+      if runningApp:mainWindow() then
+        return runningApp
+      end
+      fallback = fallback or runningApp
+    end
+  end
+  if fallback and fallback:isRunning() then return fallback end
+  return nil
+end
+
+-- Only focus an app if it's already running; otherwise do nothing.
+local function focusIfRunning(idOrName)
+  local app = findRunningApp(idOrName)
+  if app then
+    app:unhide()
+    app:activate(true)
+    local win = app:mainWindow()
+    if win then win:focus() end
+  end
+end
+
 -- Application watcher to track focused applications
 local appWatcher = hs.application.watcher.new(function(appName, eventType, appObject)
   if eventType == hs.application.watcher.activated then
@@ -11,31 +83,31 @@ local appWatcher = hs.application.watcher.new(function(appName, eventType, appOb
       previousApp = currentApp
     end
     currentApp = appObject
+    -- Track last focused editor for F2 priority
+    local matchedEditor = nil
+    if appName and editorSet[appName] then
+      matchedEditor = appName
+    else
+      matchedEditor = editorNameFromApp(appObject)
+      if not matchedEditor then
+        local frontWin = hs.window.frontmostWindow()
+        matchedEditor = editorNameFromApp(frontWin and frontWin:application() or nil)
+      end
+    end
+    if matchedEditor then
+      lastFocusedEditorName = matchedEditor
+    end
   end
 end)
 appWatcher:start()
-
--- Only focus an app if it's already running; otherwise do nothing.
-local function focusIfRunning(idOrName)
-  local app = hs.application.get(idOrName) or hs.appfinder.appFromName(idOrName)
-  if app and app:isRunning() then
-    app:activate(true)          -- brings it to front without launching
-    -- optional: focus its main window if you prefer
-    -- local win = app:mainWindow(); if win then win:focus() end
-  end
-end
-
--- F2 editor cycling: priority-ordered list of text editors
-local editorApps = {"Cursor", "Visual Studio Code", "Antigravity"}
-local lastEditorIndex = 0
 
 local function cycleEditors()
   -- Build list of currently running editors
   local runningEditors = {}
   for i, name in ipairs(editorApps) do
-    local app = hs.application.get(name) or hs.appfinder.appFromName(name)
-    if app and app:isRunning() then
-      table.insert(runningEditors, {name = name, priority = i})
+    local app = findRunningApp(name)
+    if app then
+      table.insert(runningEditors, {name = name, app = app})
     end
   end
 
@@ -44,17 +116,16 @@ local function cycleEditors()
   -- If only one editor is running, just focus it
   if #runningEditors == 1 then
     focusIfRunning(runningEditors[1].name)
-    lastEditorIndex = runningEditors[1].priority
     return
   end
 
-  -- Find which editor is currently focused
+  -- Find which editor is currently focused (compare by PID for reliability)
   local focused = hs.application.frontmostApplication()
-  local focusedName = focused and focused:name() or ""
+  local focusedPid = focused and focused:pid()
   local focusedEditorIdx = nil
 
   for i, editor in ipairs(runningEditors) do
-    if editor.name == focusedName then
+    if focusedPid and editor.app:pid() == focusedPid then
       focusedEditorIdx = i
       break
     end
@@ -63,12 +134,33 @@ local function cycleEditors()
   if focusedEditorIdx then
     -- Current app is an editor: cycle to next running editor
     local nextIdx = focusedEditorIdx % #runningEditors + 1
-    focusIfRunning(runningEditors[nextIdx].name)
-    lastEditorIndex = runningEditors[nextIdx].priority
+    local nextName = runningEditors[nextIdx].name
+    lastFocusedEditorName = nextName
+    focusIfRunning(nextName)
   else
-    -- Current app is not an editor: focus highest priority running editor
-    focusIfRunning(runningEditors[1].name)
-    lastEditorIndex = runningEditors[1].priority
+    -- Current app is not an editor:
+    -- 1) Prefer the directly previous app if it's an editor.
+    -- 2) Otherwise use last tracked editor.
+    -- 3) Fallback to the first running editor.
+    local target = runningEditors[1].name
+    local previousEditor = editorNameFromApp(previousApp)
+    if previousEditor then
+      for _, editor in ipairs(runningEditors) do
+        if editor.name == previousEditor then
+          target = previousEditor
+          break
+        end
+      end
+    elseif lastFocusedEditorName then
+      for _, editor in ipairs(runningEditors) do
+        if editor.name == lastFocusedEditorName then
+          target = lastFocusedEditorName
+          break
+        end
+      end
+    end
+    lastFocusedEditorName = target
+    focusIfRunning(target)
   end
 end
 
@@ -100,7 +192,7 @@ hs.hotkey.bind({}, "F19", function()
 end)
 
 -- Cycle through main apps
-local mainApps = {"Google Chrome", "Cursor", "Visual Studio Code", "Antigravity", "iTerm", "Notion", "Figma"}
+local mainApps = {"Google Chrome", "Cursor", "Visual Studio Code", "Antigravity", "Codex", "iTerm", "Notion", "Figma"}
 
 -- Helper function to find current app index
 local function getCurrentAppIndex()
