@@ -132,7 +132,6 @@ fi
 # ===============================
 [[ -f "$HOME/.ghcup/env" ]] && source "$HOME/.ghcup/env"
 [[ -f ~/dotfiles/zsh-z.plugin.zsh ]] && source ~/dotfiles/zsh-z.plugin.zsh
-[[ -f ~/dotfiles/gitx.zsh ]] && source ~/dotfiles/gitx.zsh
 export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow --exclude .git'
 export FZF_DEFAULT_OPTS='--height 50% --layout reverse --border --info inline'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
