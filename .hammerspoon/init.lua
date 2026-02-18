@@ -211,16 +211,12 @@ end
 -- Right Command (F15) - cycle forward
 hs.hotkey.bind({}, "F15", function()
   local currentIndex = getCurrentAppIndex()
-  local startIndex = currentIndex
-  print("F15: Starting from index " .. currentIndex .. " (" .. mainApps[currentIndex] .. ")")
   local attempts = 0
   repeat
     currentIndex = currentIndex % #mainApps + 1
     attempts = attempts + 1
-    print("F15: Trying index " .. currentIndex .. " (" .. mainApps[currentIndex] .. ")")
-    local app = hs.application.get(mainApps[currentIndex]) or hs.appfinder.appFromName(mainApps[currentIndex])
+    local app = findRunningApp(mainApps[currentIndex])
     if app and app:isRunning() then
-      print("F15: Found running app, activating")
       app:activate(true)
       break
     end
@@ -230,16 +226,13 @@ end)
 -- Right Option (F16) - cycle backward
 hs.hotkey.bind({}, "F16", function()
   local currentIndex = getCurrentAppIndex()
-  print("F16: Starting from index " .. currentIndex .. " (" .. mainApps[currentIndex] .. ")")
   local attempts = 0
   repeat
     currentIndex = currentIndex - 1
     if currentIndex < 1 then currentIndex = #mainApps end
     attempts = attempts + 1
-    print("F16: Trying index " .. currentIndex .. " (" .. mainApps[currentIndex] .. ")")
-    local app = hs.application.get(mainApps[currentIndex]) or hs.appfinder.appFromName(mainApps[currentIndex])
+    local app = findRunningApp(mainApps[currentIndex])
     if app and app:isRunning() then
-      print("F16: Found running app, activating")
       app:activate(true)
       break
     end

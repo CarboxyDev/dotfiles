@@ -4,7 +4,7 @@
 export HOMEBREW_NO_AUTO_UPDATE=1
 export BAT_THEME='zenburn'
 export EDITOR="cursor -w"
-export JAVA_HOME=$(/usr/libexec/java_home)
+export JAVA_HOME=$(/usr/libexec/java_home 2>/dev/null)
 export GEM_HOME="$HOME/.gem"
 export BUN_INSTALL="$HOME/.bun"
 export ZSH="$HOME/.oh-my-zsh"
@@ -63,7 +63,7 @@ if [ -d "$NVM_DIR/versions/node" ]; then
   fi
 
   if [ -n "$_nvm_version" ] && [ -d "$NVM_DIR/versions/node/$_nvm_version/bin" ]; then
-    export PATH="$NVM_DIR/versions/node/$_nvm_version/bin:$PATH"
+    path=("$NVM_DIR/versions/node/$_nvm_version/bin" $path)
   fi
   unset _nvm_version
 fi
@@ -123,6 +123,7 @@ fi
 [[ -f ~/dotfiles/gitx.sh ]] && source ~/dotfiles/gitx.sh
 [[ -f ~/.fzf.zsh ]] && source ~/.fzf.zsh
 [[ -f ~/.alias.zsh ]] && source ~/.alias.zsh
+[[ -f ~/.functions.zsh ]] && source ~/.functions.zsh
 [[ -s "$HOME/.bun/_bun" ]] && source "$HOME/.bun/_bun"
 
 # Colorls tab completion (glob avoids triggering gem/rbenv lazy-load)
