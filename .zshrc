@@ -4,7 +4,6 @@
 export HOMEBREW_NO_AUTO_UPDATE=1
 export BAT_THEME='zenburn'
 export EDITOR="cursor -w"
-export JAVA_HOME=$(/usr/libexec/java_home 2>/dev/null)
 export GEM_HOME="$HOME/.gem"
 export BUN_INSTALL="$HOME/.bun"
 export ZSH="$HOME/.oh-my-zsh"
@@ -37,6 +36,8 @@ setopt SHARE_HISTORY             # Share between sessions (implies immediate wri
 setopt HIST_IGNORE_ALL_DUPS      # Remove older duplicate entries
 setopt HIST_IGNORE_SPACE         # Ignore commands starting with space
 setopt HIST_REDUCE_BLANKS        # Remove superfluous blanks
+setopt HIST_FIND_NO_DUPS         # Don't show dupes in Ctrl-R search
+setopt HIST_VERIFY               # Show expanded history before executing
 
 # ===============================
 # Oh-My-Zsh Configuration
@@ -111,6 +112,17 @@ python3() { conda >/dev/null 2>&1; command python3 "$@"; }
 pip() { conda >/dev/null 2>&1; command pip "$@"; }
 pip3() { conda >/dev/null 2>&1; command pip3 "$@"; }
 
+java() {
+  unset -f java javac
+  export JAVA_HOME=$(/usr/libexec/java_home 2>/dev/null)
+  command java "$@"
+}
+javac() {
+  unset -f java javac
+  export JAVA_HOME=$(/usr/libexec/java_home 2>/dev/null)
+  command javac "$@"
+}
+
 if command -v starship >/dev/null 2>&1; then
   eval "$(starship init zsh)"
 fi
@@ -120,7 +132,12 @@ fi
 # ===============================
 [[ -f "$HOME/.ghcup/env" ]] && source "$HOME/.ghcup/env"
 [[ -f ~/dotfiles/zsh-z.plugin.zsh ]] && source ~/dotfiles/zsh-z.plugin.zsh
-[[ -f ~/dotfiles/gitx.sh ]] && source ~/dotfiles/gitx.sh
+[[ -f ~/dotfiles/gitx.zsh ]] && source ~/dotfiles/gitx.zsh
+export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow --exclude .git'
+export FZF_DEFAULT_OPTS='--height 50% --layout reverse --border --info inline'
+export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+export FZF_ALT_C_COMMAND='fd --type d --hidden --follow --exclude .git'
+export FZF_CTRL_T_OPTS="--preview 'bat --style=numbers --color=always --line-range :300 {}'"
 [[ -f ~/.fzf.zsh ]] && source ~/.fzf.zsh
 [[ -f ~/.alias.zsh ]] && source ~/.alias.zsh
 [[ -f ~/.functions.zsh ]] && source ~/.functions.zsh
@@ -131,75 +148,3 @@ for _colorls_tab in ~/.gem/ruby/*/gems/colorls-*/lib/tab_complete.sh(N); do
   source "$_colorls_tab" && break
 done
 unset _colorls_tab
-
-# ===============================
-# Custom Functions
-# ===============================
-
-run() {
-  emulate -L zsh
-  setopt NO_NOMATCH
-
-  local all=0
-  if [[ "$1" == "--all" || "$1" == "-a" ]]; then
-    all=1
-    shift
-  fi
-
-  local -a all_cpp
-  all_cpp=("${(@f)$(command find . -type f \( -name '*.cpp' -o -name '*.cc' -o -name '*.cxx' \) \
-            -not -path '*/build/*' -not -path '*/.git/*' -not -path '*/cmake-*/*' 2>/dev/null)}")
-
-  local src="$1"
-  if [[ -z "$src" ]]; then
-    if command -v fzf >/dev/null 2>&1 && (( ${#all_cpp[@]} > 0 )); then
-      src=$(printf '%s\n' "${all_cpp[@]}" | \
-            fzf --prompt='Select C++ file ▶ ' \
-                --height=80% --reverse \
-                --preview 'bat --style=numbers --color=always --line-range=:200 {} 2>/dev/null || sed -n "1,200p" {}')
-      [[ -z "$src" ]] && { echo "No file selected."; return 1; }
-    else
-      if (( ${#all_cpp[@]} == 0 )); then
-        echo "No .cpp files found."; return 1
-      fi
-      src=$(ls -t -- "${all_cpp[@]}" | head -n1)
-      echo "No file given; using most recent: $src"
-    fi
-  fi
-
-  if [[ "$src" != *.* ]]; then
-    src="$src.cpp"
-  fi
-  if [[ ! -f "$src" ]]; then
-    echo "File not found: $src"; return 1
-  fi
-
-  local -a files
-  if (( all )); then
-    files=("${all_cpp[@]}")
-    echo "Compiling ALL sources (${#files[@]} files)…"
-  else
-    files=("$src")
-    echo "Compiling: $src"
-  fi
-
-  local base="${${src:t}%.*}"
-  local out="/tmp/${base}.out"
-
-  clang++ -std=c++23 -Wall -Wextra -O2 "${files[@]}" -o "$out" \
-    && "$out" "${@:2}"
-}
-
-runall() { run --all "$@"; }
-
-function accept-line-or-clear() {
-  if [[ -z $BUFFER ]]; then
-    clear
-    zle reset-prompt
-  else
-    zle .accept-line
-  fi
-}
-
-zle -N accept-line-or-clear
-bindkey '^M' accept-line-or-clear   # Enter key

@@ -1,5 +1,3 @@
-# Comment by Arman: This is for the terminal z command. Pretty evident from the line below.
-################################################################################
 # Zsh-z - jump around with Zsh - A native Zsh version of z without awk, sort,
 # date, or sed
 #

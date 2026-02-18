@@ -9,3 +9,14 @@
 	defaultBranch = main
 [core]
 	autocrlf = input
+	pager = delta
+[interactive]
+	diffFilter = delta --color-only
+[delta]
+	navigate = true
+	dark = true
+	line-numbers = true
+[merge]
+	conflictstyle = zdiff3
+[rerere]
+	enabled = true
