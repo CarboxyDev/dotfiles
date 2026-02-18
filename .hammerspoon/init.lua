@@ -40,27 +40,29 @@ end
 
 -- Find a running app by name, trying multiple lookup strategies
 local function findRunningApp(name)
+  local wantEditor = editorSet[name] == true
+  local function isUsable(app)
+    if not app or not app:isRunning() then return false end
+    if wantEditor and not app:mainWindow() then return false end
+    return true
+  end
+
   local app = hs.application.get(name)
-  if app and app:isRunning() then return app end
+  if isUsable(app) then return app end
   app = hs.appfinder.appFromName(name)
-  if app and app:isRunning() then return app end
+  if isUsable(app) then return app end
   -- Partial/fuzzy match as last resort
   app = hs.application.find(name)
-  if app and app:isRunning() then return app end
+  if isUsable(app) then return app end
   -- Final fallback: case-insensitive substring match against running app names.
   -- This handles apps whose displayed name differs slightly (e.g. "OpenAI Codex").
   local lname = string.lower(name)
-  local fallback = nil
   for _, runningApp in ipairs(hs.application.runningApplications()) do
     local runningName = runningApp:name()
-    if runningName and string.find(string.lower(runningName), lname, 1, true) then
-      if runningApp:mainWindow() then
-        return runningApp
-      end
-      fallback = fallback or runningApp
+    if runningName and string.find(string.lower(runningName), lname, 1, true) and isUsable(runningApp) then
+      return runningApp
     end
   end
-  if fallback and fallback:isRunning() then return fallback end
   return nil
 end
 
