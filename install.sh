@@ -12,7 +12,34 @@ FILES=(
   .gitconfig
 )
 
+ZSH_CUSTOM="${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}"
+
+PLUGINS=(
+  "zsh-autosuggestions  https://github.com/zsh-users/zsh-autosuggestions"
+  "zsh-syntax-highlighting  https://github.com/zsh-users/zsh-syntax-highlighting"
+)
+
 echo "Dotfiles dir: $DOTFILES"
+echo ""
+
+# Install third-party OMZ plugins
+if [[ -d "$HOME/.oh-my-zsh" ]]; then
+  for entry in "${PLUGINS[@]}"; do
+    name="${entry%% *}"
+    url="${entry##* }"
+    dest="$ZSH_CUSTOM/plugins/$name"
+    if [[ -d "$dest" ]]; then
+      echo "  OK     $name  (already installed)"
+    else
+      git clone --depth=1 "$url" "$dest" && \
+        echo "  CLONE  $name" || \
+        echo "  FAIL   $name  (git clone failed)"
+    fi
+  done
+else
+  echo "  SKIP   oh-my-zsh plugins (oh-my-zsh not found)"
+fi
+
 echo ""
 
 for file in "${FILES[@]}"; do
