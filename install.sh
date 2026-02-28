@@ -12,6 +12,11 @@ FILES=(
   .gitconfig
 )
 
+# Files that live under ~/.config/  (repo name → config dest)
+CONFIG_FILES=(
+  "starship.toml  .config/starship.toml"
+)
+
 ZSH_CUSTOM="${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}"
 
 PLUGINS=(
@@ -66,6 +71,35 @@ for file in "${FILES[@]}"; do
 
   ln -sf "$src" "$dst"
   echo "  LINK   $file  → $src"
+done
+
+# Symlink config files into ~/.config/
+for entry in "${CONFIG_FILES[@]}"; do
+  name="${entry%% *}"
+  relpath="${entry##* }"
+  src="$DOTFILES/$name"
+  dst="$HOME/$relpath"
+
+  if [[ ! -f "$src" ]]; then
+    echo "  SKIP   $name  (not in repo)"
+    continue
+  fi
+
+  if [[ -L "$dst" && "$(readlink "$dst")" == "$src" ]]; then
+    echo "  OK     $relpath  (already symlinked)"
+    continue
+  fi
+
+  if [[ -e "$dst" && ! -L "$dst" ]]; then
+    mkdir -p "$BACKUP_DIR"
+    mkdir -p "$BACKUP_DIR/$(dirname "$relpath")"
+    mv "$dst" "$BACKUP_DIR/$relpath"
+    echo "  BACKUP $relpath  → $BACKUP_DIR/$relpath"
+  fi
+
+  mkdir -p "$(dirname "$dst")"
+  ln -sf "$src" "$dst"
+  echo "  LINK   $relpath  → $src"
 done
 
 echo ""
