@@ -2,7 +2,7 @@
 # install.sh — symlink dotfiles into ~
 # Run this once after cloning, or again after adding new files to the list.
 
-DOTFILES="$HOME/dotfiles"
+DOTFILES="${0:A:h}"
 BACKUP_DIR="$HOME/.dotfiles_backup/$(date +%Y%m%d_%H%M%S)"
 
 FILES=(
