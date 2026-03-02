@@ -141,6 +141,8 @@ export FZF_CTRL_T_OPTS="--preview 'bat --style=numbers --color=always --line-ran
 [[ -f ~/.alias.zsh ]] && source ~/.alias.zsh
 [[ -f ~/.functions.zsh ]] && source ~/.functions.zsh
 [[ -s "$HOME/.bun/_bun" ]] && source "$HOME/.bun/_bun"
+eval "$(zoxide init zsh)"
+
 
 # Colorls tab completion (glob avoids triggering gem/rbenv lazy-load)
 for _colorls_tab in ~/.gem/ruby/*/gems/colorls-*/lib/tab_complete.sh(N); do

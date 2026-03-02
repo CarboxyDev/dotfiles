@@ -20,3 +20,6 @@
 	conflictstyle = zdiff3
 [rerere]
 	enabled = true
+
+[includeIf "gitdir:/Users/admin/work/"]
+    path = /Users/admin/.gitconfig-work
