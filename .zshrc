@@ -6,8 +6,6 @@ export BAT_THEME='zenburn'
 export EDITOR="cursor -w"
 export GEM_HOME="$HOME/.gem"
 export BUN_INSTALL="$HOME/.bun"
-export ZSH="$HOME/.oh-my-zsh"
-
 # ===============================
 # PATH Management
 # ===============================
@@ -40,10 +38,10 @@ setopt HIST_FIND_NO_DUPS         # Don't show dupes in Ctrl-R search
 setopt HIST_VERIFY               # Show expanded history before executing
 
 # ===============================
-# Oh-My-Zsh Configuration
+# Zsh plugins (standalone)
 # ===============================
-plugins=(git zsh-autosuggestions zsh-syntax-highlighting)
-source $ZSH/oh-my-zsh.sh
+[[ -f ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh ]] && source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
+[[ -f ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]] && source ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 # ===============================
 # Tool Initialization
@@ -149,3 +147,6 @@ for _colorls_tab in ~/.gem/ruby/*/gems/colorls-*/lib/tab_complete.sh(N); do
   source "$_colorls_tab" && break
 done
 unset _colorls_tab
+
+# Added by Antigravity
+export PATH="/Users/admin/.antigravity/antigravity/bin:$PATH"

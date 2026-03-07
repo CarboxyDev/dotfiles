@@ -12,13 +12,13 @@ FILES=(
   .gitconfig
 )
 
-# Files that live under ~/.config/  (repo name → config dest)
+# Files that live under ~/.config/  (repo path → dest under ~)
 CONFIG_FILES=(
   "starship.toml  .config/starship.toml"
+  "ghostty/config  .config/ghostty/config"
 )
 
-ZSH_CUSTOM="${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}"
-
+ZSH_PLUGINS_DIR="${ZSH_PLUGINS_DIR:-$HOME/.zsh}"
 PLUGINS=(
   "zsh-autosuggestions  https://github.com/zsh-users/zsh-autosuggestions"
   "zsh-syntax-highlighting  https://github.com/zsh-users/zsh-syntax-highlighting"
@@ -27,23 +27,19 @@ PLUGINS=(
 echo "Dotfiles dir: $DOTFILES"
 echo ""
 
-# Install third-party OMZ plugins
-if [[ -d "$HOME/.oh-my-zsh" ]]; then
-  for entry in "${PLUGINS[@]}"; do
-    name="${entry%% *}"
-    url="${entry##* }"
-    dest="$ZSH_CUSTOM/plugins/$name"
-    if [[ -d "$dest" ]]; then
-      echo "  OK     $name  (already installed)"
-    else
-      git clone --depth=1 "$url" "$dest" && \
-        echo "  CLONE  $name" || \
-        echo "  FAIL   $name  (git clone failed)"
-    fi
-  done
-else
-  echo "  SKIP   oh-my-zsh plugins (oh-my-zsh not found)"
-fi
+mkdir -p "$ZSH_PLUGINS_DIR"
+for entry in "${PLUGINS[@]}"; do
+  name="${entry%% *}"
+  url="${entry##* }"
+  dest="$ZSH_PLUGINS_DIR/$name"
+  if [[ -d "$dest" ]]; then
+    echo "  OK     $name  (already installed)"
+  else
+    git clone --depth=1 "$url" "$dest" && \
+      echo "  CLONE  $name" || \
+      echo "  FAIL   $name  (git clone failed)"
+  fi
+done
 
 echo ""
 
