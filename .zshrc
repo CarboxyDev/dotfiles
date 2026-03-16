@@ -150,3 +150,6 @@ unset _colorls_tab
 
 # Added by Antigravity
 export PATH="/Users/admin/.antigravity/antigravity/bin:$PATH"
+
+# Added by Antigravity
+export PATH="/Users/admin/.antigravity/antigravity/bin:$PATH"
