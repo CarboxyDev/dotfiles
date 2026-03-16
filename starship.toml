@@ -5,9 +5,9 @@ command_timeout = 10000
 disabled = true
 
 [directory]
-truncation_length = 4
-truncate_to_repo = true
-fish_style_pwd_dir_length = 1
+truncation_length = 1
+truncate_to_repo = false
+fish_style_pwd_dir_length = 0
 
 [git_branch]
 symbol = " "
