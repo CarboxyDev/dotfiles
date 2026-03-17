@@ -9,20 +9,6 @@ truncation_length = 1
 truncate_to_repo = false
 fish_style_pwd_dir_length = 0
 
-[git_branch]
-symbol = " "
-truncation_length = 30
-
-[git_status]
-ahead = "⇡${count}"
-behind = "⇣${count}"
-diverged = "⇕⇡${ahead_count}⇣${behind_count}"
-untracked = "?${count}"
-stashed = "$${count}"
-modified = "!${count}"
-staged = "+${count}"
-deleted = "✘${count}"
-
 [nodejs]
 symbol = " "
 detect_files = ["package.json", ".nvmrc"]
