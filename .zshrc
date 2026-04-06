@@ -6,6 +6,7 @@ export BAT_THEME='zenburn'
 export EDITOR="cursor -w"
 export GEM_HOME="$HOME/.gem"
 export BUN_INSTALL="$HOME/.bun"
+export JAVA_HOME="/opt/homebrew/opt/openjdk@21/libexec/openjdk.jdk/Contents/Home"
 # ===============================
 # PATH Management
 # ===============================
@@ -13,11 +14,10 @@ typeset -U path
 path=(
   ~/.npm-global/bin
   /opt/homebrew/opt/make/libexec/gnubin
-  /opt/homebrew/opt/openjdk/bin
+  /opt/homebrew/opt/openjdk@21/bin
+  /opt/homebrew/opt/maven/bin
   /opt/homebrew/opt/llvm/bin
   ~/.cargo/bin
-  ~/.codeium/windsurf/bin
-  ~/.console-ninja/.bin
   "$BUN_INSTALL/bin"
   ~/go/bin
   $path
