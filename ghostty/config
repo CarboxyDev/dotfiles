@@ -18,6 +18,8 @@ scrollback-limit = 100000
 copy-on-select = clipboard
 mouse-hide-while-typing = true
 confirm-close-surface = false
+tab-inherit-working-directory = true
+window-save-state = always
 
 # ── macOS ─────────────────────────────────────────────────────
 macos-option-as-alt = true
