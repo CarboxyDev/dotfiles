@@ -131,6 +131,17 @@ run() {
 
 runall() { run --all "$@"; }
 
+ip() {
+  emulate -L zsh
+  local pub local_ip
+  pub=$(curl -fsS --max-time 8 https://ipinfo.io/ip 2>/dev/null) || pub="n/a"
+  local_ip=$(ipconfig getifaddr en0 2>/dev/null)
+  [[ -z "$local_ip" ]] && local_ip=$(ipconfig getifaddr en1 2>/dev/null)
+  [[ -z "$local_ip" ]] && local_ip="n/a"
+
+  printf "Public\t%s\nLocal\t%s\n" "$pub" "$local_ip" | column -t -s $'\t'
+}
+
 fkill() {
   emulate -L zsh
   local sig=TERM
