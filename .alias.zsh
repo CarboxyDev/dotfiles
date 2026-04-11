@@ -16,6 +16,8 @@ alias gitc='git diff --stat'
 alias gitl='git log --pretty=format:"%h - %an, %ar : %s"'
 alias gits='git status --renames'
 alias p='ports'
+alias fk='fkill'
 alias diff='colordiff'
 alias ip='curl https://ipinfo.io/ip && echo "" && ipconfig getifaddr en0'
-alias n='dev' # refer to dev() in ~/.functions.zsh
+alias n='rundev' # refer to rundev() in ~/.functions.zsh
+alias v='yazi'

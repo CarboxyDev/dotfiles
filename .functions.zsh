@@ -19,7 +19,7 @@ size() {
   du -h -d "$max_depth" "$target" | /usr/bin/sort -rh | awk '{print $2 "\t" $1}' | column -t
 }
 
-dev() {
+rundev() {
   if [ -f package.json ]; then
     if command -v pnpm >/dev/null && jq -e '.scripts.dev' package.json >/dev/null 2>&1; then pnpm dev
     elif command -v bun >/dev/null && jq -e '.scripts.dev' package.json >/dev/null 2>&1; then bun run dev
@@ -131,14 +131,16 @@ run() {
 
 runall() { run --all "$@"; }
 
-function accept-line-or-clear() {
-  if [[ -z $BUFFER ]]; then
-    clear
-    zle reset-prompt
-  else
-    zle .accept-line
-  fi
+fkill() {
+  emulate -L zsh
+  local sig=TERM
+  [[ "$1" == "-9" ]] && sig=KILL && shift
+  local sel
+  sel=$(ps -axo pid,user,pcpu,comm -r | fzf -m --reverse --header-lines=1 --query="$*") || return
+  [[ -z "$sel" ]] && return
+  local -a pids
+  pids=(${(f)"$(print -r -- "$sel" | awk '{print $1}')"})
+  (( ${#pids[@]} )) || return
+  command kill -s "$sig" -- "${pids[@]}"
 }
 
-zle -N accept-line-or-clear
-bindkey '^M' accept-line-or-clear

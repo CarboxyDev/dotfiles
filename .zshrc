@@ -130,12 +130,31 @@ fi
 # ===============================
 [[ -f "$HOME/.ghcup/env" ]] && source "$HOME/.ghcup/env"
 [[ -f ~/dotfiles/zsh-z.plugin.zsh ]] && source ~/dotfiles/zsh-z.plugin.zsh
-export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow --exclude .git'
-export FZF_DEFAULT_OPTS='--height 50% --layout reverse --border --info inline'
+# fd: skip bulky trees (Ctrl-T / Alt-C stay fast in JS/rust/python repos)
+_FZF_FD_BASE='--hidden --follow --exclude .git --exclude node_modules --exclude dist --exclude build --exclude .next --exclude target --exclude .venv --exclude vendor'
+export FZF_DEFAULT_COMMAND="fd --type f $_FZF_FD_BASE"
+export FZF_ALT_C_COMMAND="fd --type d $_FZF_FD_BASE"
+unset _FZF_FD_BASE
+export FZF_DEFAULT_OPTS='--height 50% --layout reverse --border --info inline --bind ctrl-a:select-all,ctrl-d:deselect-all,?:toggle-preview'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
-export FZF_ALT_C_COMMAND='fd --type d --hidden --follow --exclude .git'
-export FZF_CTRL_T_OPTS="--preview 'bat --style=numbers --color=always --line-range :300 {}'"
-[[ -f ~/.fzf.zsh ]] && source ~/.fzf.zsh
+export FZF_CTRL_T_OPTS="--preview 'test -f {} && bat --style=numbers --color=always --line-range :300 {} || eza -TL 2 --icons --color=always --color-scale=all {}'"
+export FZF_ALT_C_OPTS="--preview 'eza -TL 2 --icons --color=always --color-scale=all {}'"
+# fzf: Ctrl-R fuzzy history, Ctrl-T files, Alt-C directories (brew install has no ~/.fzf.zsh)
+if [[ $- == *i* ]] && command -v fzf >/dev/null 2>&1; then
+  if [[ -f ~/.fzf.zsh ]]; then
+    source ~/.fzf.zsh
+  else
+    () {
+      local _dir
+      for _dir in /opt/homebrew/opt/fzf/shell /usr/local/opt/fzf/shell "$HOME/.fzf/shell"; do
+        [[ -f "$_dir/key-bindings.zsh" ]] || continue
+        [[ -f "$_dir/completion.zsh" ]] && source "$_dir/completion.zsh"
+        source "$_dir/key-bindings.zsh"
+        break
+      done
+    }
+  fi
+fi
 [[ -f ~/.alias.zsh ]] && source ~/.alias.zsh
 [[ -f ~/.functions.zsh ]] && source ~/.functions.zsh
 [[ -s "$HOME/.bun/_bun" ]] && source "$HOME/.bun/_bun"
