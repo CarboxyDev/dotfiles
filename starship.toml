@@ -10,17 +10,17 @@ truncate_to_repo = false
 fish_style_pwd_dir_length = 0
 
 [nodejs]
-symbol = " "
 detect_files = ["package.json", ".nvmrc"]
 
 [python]
-symbol = " "
 detect_files = ["requirements.txt", "pyproject.toml", "setup.py", ".python-version"]
 pyenv_version_name = false
 
 [conda]
-symbol = " "
 ignore_base = true
+
+[package]
+disabled = true
 
 [cmd_duration]
 min_time = 2000
