@@ -4,7 +4,7 @@ local previousApp = nil
 local isSwitching = false  -- Flag to prevent tracking during manual switches
 
 -- F2 editor cycling: list of text editors
-local editorApps = {"Cursor", "Visual Studio Code", "Antigravity", "Codex"}
+local editorApps = {"Cursor", "Visual Studio Code", "Zed", "Antigravity"}
 local editorSet = {}
 for _, name in ipairs(editorApps) do editorSet[name] = true end
 local lastFocusedEditorName = nil
@@ -31,8 +31,8 @@ local function editorNameFromApp(app)
     if containsIgnoreCase(value, "visual studio code") or containsIgnoreCase(value, "vscode") then
       return "Visual Studio Code"
     end
+    if containsIgnoreCase(value, "zed") then return "Zed" end
     if containsIgnoreCase(value, "antigravity") then return "Antigravity" end
-    if containsIgnoreCase(value, "codex") then return "Codex" end
   end
 
   return nil
@@ -166,18 +166,36 @@ local function cycleEditors()
   end
 end
 
+local function focusAvailableEditor()
+  if lastFocusedEditorName and findRunningApp(lastFocusedEditorName) then
+    focusIfRunning(lastFocusedEditorName)
+    return
+  end
+
+  for _, name in ipairs(editorApps) do
+    local app = findRunningApp(name)
+    if app then
+      lastFocusedEditorName = name
+      focusIfRunning(name)
+      return
+    end
+  end
+end
+
 -- Most Important Shortcuts (do nothing if the app isn't already open)
 hs.hotkey.bind({}, "F1", function() focusIfRunning("Google Chrome") end)
-hs.hotkey.bind({}, "F2", cycleEditors)
+hs.hotkey.bind({}, "F2", function() focusIfRunning("Codex") end)
 hs.hotkey.bind({}, "F3", function() focusIfRunning("iTerm") end)
-hs.hotkey.bind({}, "F4", function() focusIfRunning("Notion") end)
-hs.hotkey.bind({}, "F5", function() focusIfRunning("Figma") end)
+hs.hotkey.bind({}, "F4", focusAvailableEditor)
+hs.hotkey.bind({}, "F5", function() focusIfRunning("Notion") end)
+hs.hotkey.bind({}, "F6", function() focusIfRunning("Figma") end)
 
 hs.hotkey.bind({"opt"}, "F1", function() focusIfRunning("Google Chrome") end)
-hs.hotkey.bind({"opt"}, "F2", cycleEditors)
+hs.hotkey.bind({"opt"}, "F2", function() focusIfRunning("Codex") end)
 hs.hotkey.bind({"opt"}, "F3", function() focusIfRunning("iTerm") end)
-hs.hotkey.bind({"opt"}, "F4", function() focusIfRunning("Notion") end)
-hs.hotkey.bind({"opt"}, "F5", function() focusIfRunning("Figma") end)
+hs.hotkey.bind({"opt"}, "F4", focusAvailableEditor)
+hs.hotkey.bind({"opt"}, "F5", function() focusIfRunning("Notion") end)
+hs.hotkey.bind({"opt"}, "F6", function() focusIfRunning("Figma") end)
 
 -- Capslock (F19) to switch between current and previous app
 hs.hotkey.bind({}, "F19", function()
@@ -194,7 +212,7 @@ hs.hotkey.bind({}, "F19", function()
 end)
 
 -- Cycle through main apps
-local mainApps = {"Google Chrome", "Cursor", "Visual Studio Code", "Antigravity", "Codex", "iTerm", "Notion", "Figma"}
+local mainApps = {"Google Chrome", "Codex", "iTerm", "Cursor", "Visual Studio Code", "Zed", "Antigravity", "Notion", "Figma"}
 
 -- Helper function to find current app index
 local function getCurrentAppIndex()
@@ -241,8 +259,8 @@ hs.hotkey.bind({}, "F16", function()
   until attempts >= #mainApps
 end)
 
--- Remap CMD+F1..F5 to CMD+1..5 as you had
-for i = 1, 5 do
+-- Remap CMD+F1..F6 to CMD+1..6 as you had
+for i = 1, 6 do
   hs.hotkey.bind({"cmd"}, "F"..i, function()
     hs.eventtap.keyStroke({"cmd"}, tostring(i))
   end)

@@ -167,8 +167,5 @@ for _colorls_tab in ~/.gem/ruby/*/gems/colorls-*/lib/tab_complete.sh(N); do
 done
 unset _colorls_tab
 
-# Added by Antigravity
-export PATH="/Users/admin/.antigravity/antigravity/bin:$PATH"
-
-# Added by Antigravity
-export PATH="/Users/admin/.antigravity/antigravity/bin:$PATH"
+# opencode
+export PATH=/Users/arman/.opencode/bin:$PATH
