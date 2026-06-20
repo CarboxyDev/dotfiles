@@ -4,7 +4,7 @@ local previousApp = nil
 local isSwitching = false  -- Flag to prevent tracking during manual switches
 
 -- F2 editor cycling: list of text editors
-local editorApps = {"Cursor", "Visual Studio Code", "Zed", "Antigravity"}
+local editorApps = {"Zed", "Cursor", "Visual Studio Code", "Antigravity"}
 local editorSet = {}
 for _, name in ipairs(editorApps) do editorSet[name] = true end
 local lastFocusedEditorName = nil
@@ -74,6 +74,15 @@ local function focusIfRunning(idOrName)
     app:activate(true)
     local win = app:mainWindow()
     if win then win:focus() end
+  end
+end
+
+local function focusFirstRunningApp(appNames)
+  for _, name in ipairs(appNames) do
+    if findRunningApp(name) then
+      focusIfRunning(name)
+      return
+    end
   end
 end
 
@@ -185,14 +194,14 @@ end
 -- Most Important Shortcuts (do nothing if the app isn't already open)
 hs.hotkey.bind({}, "F1", function() focusIfRunning("Google Chrome") end)
 hs.hotkey.bind({}, "F2", function() focusIfRunning("Codex") end)
-hs.hotkey.bind({}, "F3", function() focusIfRunning("iTerm") end)
+hs.hotkey.bind({}, "F3", function() focusFirstRunningApp({"Ghostty", "iTerm"}) end)
 hs.hotkey.bind({}, "F4", focusAvailableEditor)
 hs.hotkey.bind({}, "F5", function() focusIfRunning("Notion") end)
 hs.hotkey.bind({}, "F6", function() focusIfRunning("Figma") end)
 
 hs.hotkey.bind({"opt"}, "F1", function() focusIfRunning("Google Chrome") end)
 hs.hotkey.bind({"opt"}, "F2", function() focusIfRunning("Codex") end)
-hs.hotkey.bind({"opt"}, "F3", function() focusIfRunning("iTerm") end)
+hs.hotkey.bind({"opt"}, "F3", function() focusFirstRunningApp({"Ghostty", "iTerm"}) end)
 hs.hotkey.bind({"opt"}, "F4", focusAvailableEditor)
 hs.hotkey.bind({"opt"}, "F5", function() focusIfRunning("Notion") end)
 hs.hotkey.bind({"opt"}, "F6", function() focusIfRunning("Figma") end)
