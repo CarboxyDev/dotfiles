@@ -18,3 +18,4 @@ alias fk='fkill'
 alias diff='colordiff'
 alias n='rundev' # refer to rundev() in ~/.functions.zsh
 alias v='yazi'
+alias s='codex-auth switch'
