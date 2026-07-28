@@ -160,12 +160,9 @@ fi
 [[ -s "$HOME/.bun/_bun" ]] && source "$HOME/.bun/_bun"
 eval "$(zoxide init zsh)"
 
-
-# Colorls tab completion (glob avoids triggering gem/rbenv lazy-load)
-for _colorls_tab in ~/.gem/ruby/*/gems/colorls-*/lib/tab_complete.sh(N); do
-  source "$_colorls_tab" && break
-done
-unset _colorls_tab
+# `ls` is aliased to eza, so give the expanded command normal path completion.
+# Without this, `ls <TAB>` falls back differently from `cd <TAB>`.
+(( $+functions[compdef] )) && compdef _files eza
 
 # opencode
 export PATH=/Users/arman/.opencode/bin:$PATH
