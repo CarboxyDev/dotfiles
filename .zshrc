@@ -130,6 +130,10 @@ fi
 # ===============================
 [[ -f "$HOME/.ghcup/env" ]] && source "$HOME/.ghcup/env"
 [[ -f ~/dotfiles/zsh-z.plugin.zsh ]] && source ~/dotfiles/zsh-z.plugin.zsh
+# Make Homebrew-provided Zsh completions available before fzf runs compinit.
+fpath=(/opt/homebrew/share/zsh/site-functions $fpath)
+# Match filenames and command arguments without requiring exact letter casing.
+zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
 # fd: skip bulky trees (Ctrl-T / Alt-C stay fast in JS/rust/python repos)
 _FZF_FD_BASE='--hidden --follow --exclude .git --exclude node_modules --exclude dist --exclude build --exclude .next --exclude target --exclude .venv --exclude vendor'
 export FZF_DEFAULT_COMMAND="fd --type f $_FZF_FD_BASE"
@@ -160,9 +164,11 @@ fi
 [[ -s "$HOME/.bun/_bun" ]] && source "$HOME/.bun/_bun"
 eval "$(zoxide init zsh)"
 
-# `ls` is aliased to eza, so give the expanded command normal path completion.
-# Without this, `ls <TAB>` falls back differently from `cd <TAB>`.
-(( $+functions[compdef] )) && compdef _files eza
+# `ls` is aliased to eza, so use eza's native completion for both names.
+if (( $+functions[compdef] )); then
+  autoload -Uz _eza
+  compdef _eza ls eza
+fi
 
 # opencode
 export PATH=/Users/arman/.opencode/bin:$PATH
