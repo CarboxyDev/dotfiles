@@ -7,6 +7,54 @@ gitx() {
   git add --all && git commit -m "$msg"
 }
 
+gitb() {
+  emulate -L zsh
+
+  git rev-parse --is-inside-work-tree >/dev/null 2>&1 || {
+    echo "gitb: not inside a Git repository"
+    return 1
+  }
+
+  # A branch passed explicitly skips the picker.
+  if (( $# > 0 )); then
+    git switch "$@"
+    return
+  fi
+
+  command -v fzf >/dev/null 2>&1 || {
+    echo "gitb: fzf is required (install with: brew install fzf)"
+    return 1
+  }
+
+  local selection branch
+  selection=$(
+    git for-each-ref \
+      --sort=-committerdate \
+      --format='%(refname:short)%09%(HEAD)%09%(refname)%09%(committerdate:relative)%09%(subject)' \
+      refs/heads refs/remotes |
+      awk -F '\t' 'BEGIN { OFS="\t" }
+        $3 !~ /\/HEAD$/ && $2 != "*" {
+          type = ($3 ~ /^refs\/heads\//) ? "local" : "remote"
+          print $1, type, $4, $5
+        }' |
+      fzf --height=80% --reverse --ansi \
+          --delimiter=$'\t' --with-nth=1,2,3,4 \
+          --prompt='Switch branch ▶ ' \
+          --header='branch  type  updated  latest commit' \
+          --preview='git log --color=always --date=short --pretty="format:%C(yellow)%h%Creset %C(cyan)%ad%Creset %s %C(dim white)(%an)%Creset" -12 {1} --' \
+          --preview-window='right,55%,wrap'
+  ) || return
+
+  branch="${selection%%$'\t'*}"
+  [[ -n "$branch" ]] || return
+
+  if [[ "$branch" == */* ]] && ! git show-ref --verify --quiet "refs/heads/$branch"; then
+    git switch --track "$branch"
+  else
+    git switch "$branch"
+  fi
+}
+
 ports() {
   echo "Active Listening Ports:"
   echo "PORT\tPID\tPROCESS\tSTATE" | column -t -s $'\t'
@@ -154,4 +202,3 @@ fkill() {
   (( ${#pids[@]} )) || return
   command kill -s "$sig" -- "${pids[@]}"
 }
-
