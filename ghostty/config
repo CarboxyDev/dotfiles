@@ -27,3 +27,9 @@ macos-titlebar-style = tabs
 # ── Shell integration ─────────────────────────────────────────
 shell-integration = detect
 shell-integration-features = cursor,sudo,title
+
+# Previous tab
+keybind = cmd+opt+left=previous_tab
+
+# Next tab
+keybind = cmd+opt+right=next_tab
