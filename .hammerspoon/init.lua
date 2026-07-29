@@ -193,18 +193,18 @@ end
 
 -- Most Important Shortcuts (do nothing if the app isn't already open)
 hs.hotkey.bind({}, "F1", function() focusIfRunning("Google Chrome") end)
-hs.hotkey.bind({}, "F2", function() focusIfRunning("Codex") end)
+hs.hotkey.bind({}, "F2", function() focusIfRunning("com.openai.codex") end)
 hs.hotkey.bind({}, "F3", function() focusFirstRunningApp({"Ghostty", "iTerm"}) end)
 hs.hotkey.bind({}, "F4", focusAvailableEditor)
 hs.hotkey.bind({}, "F5", function() focusIfRunning("Notion") end)
 hs.hotkey.bind({}, "F6", function() focusIfRunning("Figma") end)
 
-hs.hotkey.bind({"opt"}, "F1", function() focusIfRunning("Google Chrome") end)
-hs.hotkey.bind({"opt"}, "F2", function() focusIfRunning("Codex") end)
-hs.hotkey.bind({"opt"}, "F3", function() focusFirstRunningApp({"Ghostty", "iTerm"}) end)
-hs.hotkey.bind({"opt"}, "F4", focusAvailableEditor)
-hs.hotkey.bind({"opt"}, "F5", function() focusIfRunning("Notion") end)
-hs.hotkey.bind({"opt"}, "F6", function() focusIfRunning("Figma") end)
+hs.hotkey.bind({"alt"}, "F1", function() focusIfRunning("Google Chrome") end)
+hs.hotkey.bind({"alt"}, "F2", function() focusIfRunning("com.openai.codex") end)
+hs.hotkey.bind({"alt"}, "F3", function() focusFirstRunningApp({"Ghostty", "iTerm"}) end)
+hs.hotkey.bind({"alt"}, "F4", focusAvailableEditor)
+hs.hotkey.bind({"alt"}, "F5", function() focusIfRunning("Notion") end)
+hs.hotkey.bind({"alt"}, "F6", function() focusIfRunning("Figma") end)
 
 -- Capslock (F19) to switch between current and previous app
 hs.hotkey.bind({}, "F19", function()
