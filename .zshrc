@@ -41,7 +41,6 @@ setopt HIST_VERIFY               # Show expanded history before executing
 # Zsh plugins (standalone)
 # ===============================
 [[ -f ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh ]] && source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
-[[ -f ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]] && source ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 # ===============================
 # Tool Initialization
@@ -110,17 +109,6 @@ python3() { conda >/dev/null 2>&1; command python3 "$@"; }
 pip() { conda >/dev/null 2>&1; command pip "$@"; }
 pip3() { conda >/dev/null 2>&1; command pip3 "$@"; }
 
-java() {
-  unset -f java javac
-  export JAVA_HOME=$(/usr/libexec/java_home 2>/dev/null)
-  command java "$@"
-}
-javac() {
-  unset -f java javac
-  export JAVA_HOME=$(/usr/libexec/java_home 2>/dev/null)
-  command javac "$@"
-}
-
 if command -v starship >/dev/null 2>&1; then
   eval "$(starship init zsh)"
 fi
@@ -171,4 +159,7 @@ if (( $+functions[compdef] )); then
 fi
 
 # opencode
-export PATH=/Users/arman/.opencode/bin:$PATH
+export PATH="$HOME/.opencode/bin:$PATH"
+
+# Must be sourced after all other plugins and widget definitions.
+[[ -f ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]] && source ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh

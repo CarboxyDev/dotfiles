@@ -1,9 +1,16 @@
 gitx() {
+  emulate -L zsh
+
   if [[ "$1" == "-m" ]]; then
-    local msg="${2:-Add latest changes}"
-  else
-    local msg="${1:-Add latest changes}"
+    shift
   fi
+
+  local msg="$*"
+  if [[ -z "$msg" ]]; then
+    echo "Usage: gitx [-m] <commit message>"
+    return 1
+  fi
+
   git add --all && git commit -m "$msg"
 }
 

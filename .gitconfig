@@ -21,4 +21,4 @@
 [rerere]
 	enabled = true
 [includeIf "gitdir/i:~/Work/"]
-	path = /Users/admin/.gitconfig-work
+	path = ~/.gitconfig-work
