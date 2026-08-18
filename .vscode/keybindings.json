@@ -388,5 +388,9 @@
     "key": "alt+/",
     "command": "-gitlens.gitCommands",
     "when": "!gitlens:disabled && config.gitlens.keymap == 'alternate'"
+  },
+  {
+    "key": "shift+cmd+e",
+    "command": "-fastapi-vscode.searchPathOperations"
   }
 ]
