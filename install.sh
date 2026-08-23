@@ -10,6 +10,9 @@ FILES=(
   .alias.zsh
   .functions.zsh
   .gitconfig
+  .hammerspoon/init.lua
+  .local/bin/dotfiles-capslock-f19
+  Library/LaunchAgents/com.admin.hammerspoon.capslock-f19.plist
 )
 
 # Files that live under ~/.config/  (repo path → dest under ~)
@@ -61,10 +64,12 @@ for file in "${FILES[@]}"; do
   # Back up any existing real file
   if [[ -e "$dst" && ! -L "$dst" ]]; then
     mkdir -p "$BACKUP_DIR"
+    mkdir -p "$BACKUP_DIR/$(dirname "$file")"
     mv "$dst" "$BACKUP_DIR/$file"
     echo "  BACKUP $file  → $BACKUP_DIR/$file"
   fi
 
+  mkdir -p "$(dirname "$dst")"
   ln -sf "$src" "$dst"
   echo "  LINK   $file  → $src"
 done

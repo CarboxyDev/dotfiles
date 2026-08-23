@@ -1,7 +1,13 @@
+-- Keep Hammerspoon active after login.
+hs.autoLaunch(true)
+
 -- Variables to track current and previous applications for app switching
-local currentApp = nil
+local currentApp = hs.application.frontmostApplication()
 local previousApp = nil
+local currentWindow = hs.window.frontmostWindow()
+local previousWindow = nil
 local isSwitching = false  -- Flag to prevent tracking during manual switches
+local switchSettleDelay = 0.15
 
 -- F2 editor cycling: list of text editors
 local editorApps = {"Zed", "Cursor", "Visual Studio Code", "Antigravity"}
@@ -87,7 +93,7 @@ local function focusFirstRunningApp(appNames)
 end
 
 -- Application watcher to track focused applications
-local appWatcher = hs.application.watcher.new(function(appName, eventType, appObject)
+dotfilesAppWatcher = hs.application.watcher.new(function(appName, eventType, appObject)
   if eventType == hs.application.watcher.activated then
     -- Only update history if we're not in the middle of a manual switch
     if not isSwitching and currentApp and currentApp ~= appObject then
@@ -110,7 +116,18 @@ local appWatcher = hs.application.watcher.new(function(appName, eventType, appOb
     end
   end
 end)
-appWatcher:start()
+dotfilesAppWatcher:start()
+
+-- Track focused windows so Mission Control, trackpad, and same-app window changes count.
+dotfilesWindowWatcher = hs.window.filter.new(true)
+dotfilesWindowWatcher:subscribe(hs.window.filter.windowFocused, function(window)
+  if not window then return end
+
+  if not isSwitching and currentWindow and currentWindow:id() ~= window:id() then
+    previousWindow = currentWindow
+  end
+  currentWindow = window
+end)
 
 local function cycleEditors()
   -- Build list of currently running editors
@@ -206,19 +223,33 @@ hs.hotkey.bind({"alt"}, "F4", focusAvailableEditor)
 hs.hotkey.bind({"alt"}, "F5", function() focusIfRunning("Notion") end)
 hs.hotkey.bind({"alt"}, "F6", function() focusIfRunning("Figma") end)
 
--- Capslock (F19) to switch between current and previous app
-hs.hotkey.bind({}, "F19", function()
+local function switchToPreviousWindow()
+  if previousWindow and previousWindow:application() and previousWindow:application():isRunning() then
+    isSwitching = true
+    previousWindow:focus()
+    currentWindow, previousWindow = previousWindow, currentWindow
+    hs.timer.doAfter(switchSettleDelay, function()
+      isSwitching = false
+    end)
+    return
+  end
+
+  -- Fall back to application history if the previous window no longer exists.
   if previousApp and previousApp:isRunning() then
     isSwitching = true
     previousApp:activate(true)
     -- Swap current and previous
     currentApp, previousApp = previousApp, currentApp
     -- Reset flag after a short delay
-    hs.timer.doAfter(0.5, function()
+    hs.timer.doAfter(switchSettleDelay, function()
       isSwitching = false
     end)
   end
-end)
+end
+
+-- Caps Lock reaches this binding through Karabiner when configured, or through
+-- the native hidutil login agent installed with these dotfiles.
+hs.hotkey.bind({}, "F19", switchToPreviousWindow)
 
 -- Cycle through main apps
 local mainApps = {"Google Chrome", "Codex", "iTerm", "Cursor", "Visual Studio Code", "Zed", "Antigravity", "Notion", "Figma"}

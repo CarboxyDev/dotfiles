@@ -1,0 +1,33 @@
+#!/bin/zsh
+
+# Keep an existing Karabiner Caps Lock to F19 rule in charge. Otherwise use
+# macOS hidutil so the same Hammerspoon F19 binding works without Karabiner.
+mode="auto"
+mode_file="$HOME/.config/dotfiles/capslock-remapper"
+karabiner_config="$HOME/.config/karabiner/karabiner.json"
+
+if [[ -r "$mode_file" ]]; then
+  mode="$(/usr/bin/head -n 1 "$mode_file" | /usr/bin/tr '[:upper:]' '[:lower:]' | /usr/bin/tr -d '[:space:]')"
+fi
+
+case "$mode" in
+  auto)
+    if [[ -r "$karabiner_config" ]] && \
+      /usr/bin/tr -d '[:space:]' < "$karabiner_config" | \
+      /usr/bin/grep -Eq '"key_code":"caps_lock".{0,1000}"key_code":"f19"'; then
+      exit 0
+    fi
+    ;;
+  karabiner|external|off)
+    exit 0
+    ;;
+  hidutil|native|on)
+    ;;
+  *)
+    echo "Unknown Caps Lock remapper mode '$mode'; expected auto, native, or karabiner" >&2
+    exit 2
+    ;;
+esac
+
+exec /usr/bin/hidutil property --set \
+  '{"UserKeyMapping":[{"HIDKeyboardModifierMappingSrc":30064771129,"HIDKeyboardModifierMappingDst":30064771182}]}'
