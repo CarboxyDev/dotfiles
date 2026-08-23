@@ -88,27 +88,6 @@ if command -v rbenv >/dev/null 2>&1; then
   bundle() { rbenv >/dev/null 2>&1; command bundle "$@"; }
 fi
 
-conda() {
-  unset -f conda python python3 pip pip3
-  __conda_setup="$('/opt/homebrew/Caskroom/miniconda/base/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
-  if [ $? -eq 0 ]; then
-      eval "$__conda_setup"
-  else
-      if [ -f "/opt/homebrew/Caskroom/miniconda/base/etc/profile.d/conda.sh" ]; then
-          . "/opt/homebrew/Caskroom/miniconda/base/etc/profile.d/conda.sh"
-      else
-          export PATH="/opt/homebrew/Caskroom/miniconda/base/bin:$PATH"
-      fi
-  fi
-  unset __conda_setup
-  conda "$@"
-}
-unalias python python3 pip pip3 2>/dev/null
-python() { conda >/dev/null 2>&1; command python "$@"; }
-python3() { conda >/dev/null 2>&1; command python3 "$@"; }
-pip() { conda >/dev/null 2>&1; command pip "$@"; }
-pip3() { conda >/dev/null 2>&1; command pip3 "$@"; }
-
 if command -v starship >/dev/null 2>&1; then
   eval "$(starship init zsh)"
 fi
