@@ -14,6 +14,116 @@ gitx() {
   git add --all && git commit -m "$msg"
 }
 
+gg() {
+  emulate -L zsh
+
+  local host="github.com"
+  local work_account="CarboxyDev"
+  local personal_account="ArmanGanjoo"
+  local selection="${1:-next}"
+  local active target account
+  local -a accounts
+
+  if (( $# > 1 )); then
+    echo "Usage: gg [next|work|personal|status|list|help|USERNAME]"
+    return 1
+  fi
+
+  command -v gh >/dev/null 2>&1 || {
+    echo "gg: GitHub CLI is not installed"
+    echo "Install it with: brew install gh"
+    return 1
+  }
+
+  accounts=("${(@f)$(gh auth status --hostname "$host" --json hosts \
+    --jq ".hosts[\"$host\"][] | select(.state == \"success\") | .login" 2>/dev/null)}")
+  active=$(gh auth status --active --hostname "$host" --json hosts \
+    --jq ".hosts[\"$host\"][0].login" 2>/dev/null)
+
+  case "$selection" in
+    help|-h|--help)
+      echo "Usage: gg [next|work|personal|status|list|help|USERNAME]"
+      echo ""
+      echo "  gg              Cycle to the next authenticated account"
+      echo "  gg work         Switch to $work_account"
+      echo "  gg personal     Switch to $personal_account"
+      echo "  gg status       Show the active account"
+      echo "  gg list         List authenticated accounts"
+      echo "  gg USERNAME     Switch directly to an authenticated username"
+      echo ""
+      echo "Scope: switches the active GitHub CLI account for $host."
+      echo "SSH remote identity is configured separately in ~/.ssh/config."
+      return
+      ;;
+    status)
+      if [[ -n "$active" ]]; then
+        echo "GitHub CLI active account: $active"
+      else
+        echo "gg: no active authenticated account for $host"
+        echo "Log in with: gh auth login --hostname $host"
+        return 1
+      fi
+      return
+      ;;
+    list)
+      if (( ${#accounts[@]} == 0 )); then
+        echo "gg: no authenticated accounts for $host"
+        echo "Log in with: gh auth login --hostname $host"
+        return 1
+      fi
+      echo "Authenticated GitHub CLI accounts:"
+      for account in "${accounts[@]}"; do
+        if [[ "$account" == "$active" ]]; then
+          printf "  * %s (active)\n" "$account"
+        else
+          printf "    %s\n" "$account"
+        fi
+      done
+      return
+      ;;
+    work)
+      target="$work_account"
+      ;;
+    personal)
+      target="$personal_account"
+      ;;
+    next)
+      if (( ${#accounts[@]} < 2 )); then
+        echo "gg: cycling needs at least two authenticated accounts"
+        echo "Add one with: gh auth login --hostname $host"
+        return 1
+      fi
+
+      target="${accounts[1]}"
+      for (( account = 1; account <= ${#accounts[@]}; account++ )); do
+        if [[ "${accounts[$account]}" == "$active" ]]; then
+          target="${accounts[$(( account % ${#accounts[@]} + 1 ))]}"
+          break
+        fi
+      done
+      ;;
+    *)
+      target="$selection"
+      ;;
+  esac
+
+  if (( ${accounts[(Ie)$target]} == 0 )); then
+    echo "gg: '$target' is not authenticated for $host"
+    echo "Authenticated accounts: ${(j:, :)accounts}"
+    echo "Add it with: gh auth login --hostname $host"
+    return 1
+  fi
+
+  if [[ "$target" == "$active" ]]; then
+    echo "GitHub CLI account already active: $active"
+    return
+  fi
+
+  echo "Switching GitHub CLI account: $active -> $target"
+  gh auth switch --hostname "$host" --user "$target" || return
+  echo "GitHub CLI active account: $target"
+}
+
 gitb() {
   emulate -L zsh
 

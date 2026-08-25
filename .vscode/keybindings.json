@@ -249,8 +249,13 @@
     "when": "textInputFocus"
   },
   {
-    "key": "cmd+g",
+    "key": "shift+cmd+g",
     "command": "quickgrep.action"
+  },
+  {
+    "key": "cmd+g",
+    "command": "workbench.action.quickOpenPreviousRecentlyUsedEditorInGroup",
+    "when": "!activeEditorGroupEmpty"
   },
   {
     "key": "cmd+e",
