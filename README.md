@@ -7,6 +7,9 @@ Some commands/modules listed in some dotfiles might require third-party installa
 
 I use these dotfiles exclusively on macOS.
 
+For a new Mac, start with [MAC_SETUP.md](MAC_SETUP.md) to choose apps, restore
+these configs, and verify the setup.
+
 ## Caps Lock window switching
 
 Hammerspoon listens for F19 to switch to the previously focused window. At
