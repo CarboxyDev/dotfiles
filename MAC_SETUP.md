@@ -6,8 +6,9 @@ my workflow, not a list of everything installed on the old machine.
 ## First steps
 
 1. Install Xcode Command Line Tools, Homebrew, and Git.
-2. Clone this repo. Read `install.sh`, then run it.
-3. Install the command-line tools below, restart the shell, and check what works.
+2. Clone this repo. Review `Brewfile`, then run `brew bundle --file=Brewfile`
+   to install the core command-line tools and font.
+3. Read `install.sh`, run it, restart the shell, and check what works.
 4. Add apps and accounts as needed. Revisit the manual settings at the end.
 
 ## Apps worth setting up
@@ -38,8 +39,8 @@ update those bindings instead of installing an app just to satisfy a shortcut.
 - **Zsh plugins:** `install.sh` clones `zsh-autosuggestions` and
   `zsh-syntax-highlighting`. A Nerd Font is useful for terminal icons.
 
-The repo does not install packages. Once the preferred set is clear, maintain a
-small reviewed `Brewfile` instead of copying every installed formula or cask.
+`Brewfile` installs the core tools above. Install optional runtimes and apps
+only when needed.
 
 ## Config covered by this repo
 
@@ -55,7 +56,8 @@ macOS preferences are not restored by `install.sh`.
 
 - [ ] Choose the editor, browser, and optional apps I actually want.
 - [ ] Restore editor extensions, font, and theme. Check the saved `.vscode/`
-      settings and set `.zshrc`'s `EDITOR` to the editor I choose.
+      settings and confirm the `code` command is available for `.zshrc`'s
+      `EDITOR` setting.
 - [ ] Check Ghostty, Starship, shell aliases, and fuzzy-search shortcuts.
 - [ ] Grant Hammerspoon permissions; test F1-F6 app shortcuts and Caps Lock
       switching. The repo's helper uses Karabiner's F19 mapping if present,

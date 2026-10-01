@@ -3,7 +3,7 @@
 # ===============================
 export HOMEBREW_NO_AUTO_UPDATE=1
 export BAT_THEME='zenburn'
-export EDITOR="cursor -w"
+export EDITOR="code -w"
 export GEM_HOME="$HOME/.gem"
 export BUN_INSTALL="$HOME/.bun"
 export JAVA_HOME="/opt/homebrew/opt/openjdk@21/libexec/openjdk.jdk/Contents/Home"
